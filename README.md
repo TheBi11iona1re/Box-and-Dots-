@@ -1,5 +1,5 @@
-# Template Repository : SvelteKit + TailwindCSS (3.0.0-alpha) + Tauri Studio
+# Box and Dots : SvelteKit + TailwindCSS (3.0.0-alpha) + Tauri Studio
 
-- Very Opinionated (I enjoy working with TailwindCSS and I like the Nord Pallette.)
+- Box and Dots game in sveltekit tauri and tailwind including an AI 
 
 Run 'yarn install` to install all dependencies. Then run `yarn tauri dev` to get started.
