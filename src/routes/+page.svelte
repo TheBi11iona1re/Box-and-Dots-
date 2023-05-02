@@ -1,6 +1,6 @@
 <center>
   
-  <h1 class="text-4xl font-bold text-center">Main Menu</h1>
+  <h1 class="mt-[15px] text-4xl font-bold text-center">Main Menu</h1>
 
   <p>Box and Dots Beta</p>
   <p> Using Svelte and Tailwind with Tauri </p>
