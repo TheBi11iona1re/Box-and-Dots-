@@ -1,3 +1,5 @@
+
+
 <script>
   let count = 0;
   function increment() {
@@ -9,8 +11,8 @@
   
   <h1 class="mt-[15px] text-4xl font-bold text-center">Main Menu</h1>
 
-  <p>Box and Dots Beta</p>
-  <p> Using Svelte and Tailwind with Tauri </p>
+  <p class="text-2xl font-semi-bold">Box and Dots Beta</p>
+  <p class="font-normal"> Using Svelte and Tailwind with Tauri </p>
 </center>
 
 <style lang="postcss">
