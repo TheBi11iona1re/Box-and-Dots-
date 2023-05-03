@@ -1,7 +1,4 @@
-
-
-<script>
-  
+<script> 
   let count = 0;
   function increment() {
     count += 1;
@@ -20,9 +17,6 @@
       
     };
 
-  
-
-
   });
 
   let cps = 0;
@@ -36,8 +30,6 @@
   setTimeout(() => {
     clearInterval(interval);
   }, 2147483647);
-
-
 
 </script>
 
