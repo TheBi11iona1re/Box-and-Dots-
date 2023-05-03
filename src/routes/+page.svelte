@@ -1,6 +1,7 @@
 
 
 <script>
+  
   let count = 0;
   function increment() {
     count += 1;
@@ -34,7 +35,7 @@
 
   setTimeout(() => {
     clearInterval(interval);
-  }, 11000000000000);
+  }, 2147483647);
 
 
 
