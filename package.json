@@ -33,5 +33,9 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.3.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@videsk/tailwind-random-color": "^0.2.0-beta",
+		"tailwindcss-ripple": "^0.7.1"
+	}
 }

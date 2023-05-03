@@ -2,8 +2,15 @@
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
-    extend: {},
+    ripple: theme => ({
+      colors: theme('colors'),
+      darken: 0.1,
+
+    }),
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-ripple')()
+  ],
+  extend: {},
 }
 
