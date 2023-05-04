@@ -69,7 +69,7 @@
   <h1 class="mt-[15px] text-4xl font-bold text-center">Main Menu</h1>
 
   <p class="text-2xl font-semi-bold">Box and Dots Beta / CPS Tester </p>
-  <p class="font-normal"> Using Svelte and Tailwind with Tauri currently Testing for your CPS </p>
+  <p class="font-semi-bold"> Using Svelte and Tailwind with Tauri currently Testing for your CPS </p>
 </center>
 
 <style lang="postcss">
