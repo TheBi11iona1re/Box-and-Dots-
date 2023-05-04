@@ -1,4 +1,7 @@
 <script> 
+
+
+
   let count = 0;
   function increment() {
     count += 1;
@@ -31,6 +34,34 @@
     clearInterval(interval);
   }, 2147483647);
 
+  function reset() {
+    count = 0
+    cps = 0
+    seconds = 0
+  }
+
+  let answer = "mom";
+
+  function result() {
+    if (cps < 5) {
+      answer = "You're a turtle";
+    }
+
+    else if (cps < 8 ){
+      answer = "You're Rabbit"
+    }
+
+    else if (cps < 11 ){
+      answer = "You're a Cheetah"
+    }
+
+
+    else{
+      answer = "You're Allah"
+    }
+    return answer;
+  }
+
 </script>
 
 <center>
@@ -51,11 +82,18 @@
 
 <center>
   
-  <button class="ripple-bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[100px] rounded-full w-[600px] h-[200px] text-6xl font-bold text-center active:" on:click={increment}>
+  <button class="ripple-bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[50px] rounded-full w-[600px] h-[200px] text-6xl font-bold text-center active:" on:click={increment} on:click={result}>
     Click!
   </button>
 </center>
-
+<center>
+  <button class="ripple-bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[10px] rounded-full w-[100px] h-[50px] text-2xl font-bold text-center active:" on:click={reset} > 
+  Reset </button>
+</center>
 <center class="mt-[15px] text-2xl font-bold text-center">
-  <p>Clicks: {count} CPS: {cps} Seconds: {seconds} </p>
+  <p>CPS: {cps} Time: {seconds}</p>
+</center>
+
+<center>
+  <p class ="blur-sm hover:blur-none"> Result: {answer}</p>
 </center>
