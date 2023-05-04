@@ -48,7 +48,7 @@
     }
 
     else if (cps < 8 ){
-      answer = "You're Rabbit"
+      answer = "You're a Rabbit"
     }
 
     else if (cps < 11 ){
@@ -57,7 +57,7 @@
 
 
     else{
-      answer = "You're Allah"
+      answer = "You're a Professional"
     }
     return answer;
   }
@@ -95,5 +95,5 @@
 </center>
 
 <center>
-  <p class ="blur-sm hover:blur-none"> Result: {answer}</p>
+  <p class ="blur-sm hover:blur-none font-bold"> Result: {answer}</p>
 </center>
