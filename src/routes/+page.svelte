@@ -40,7 +40,7 @@
     seconds = 0
   }
 
-  let answer = "mom";
+  let answer = "start clicking see how you compare to others!";
 
   function result() {
     if (cps < 5) {
