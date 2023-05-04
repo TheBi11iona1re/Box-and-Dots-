@@ -1,6 +1,7 @@
+
 <script> 
 
-
+import "../app.css";
 
   let count = 0;
   function increment() {
@@ -64,21 +65,19 @@
 
 </script>
 
+
+
+<div class="bg-gray-400 h-screen w-screen ">
+  <!-- Your content here -->
+
+
 <center>
   
-  <h1 class="mt-[15px] text-4xl font-bold text-center">CPS Tester</h1>
+  <h1 class="mt-[0px] text-4xl font-bold text-center">CPS Tester</h1>
 
   <p class="text-2xl font-semi-bold">CPS Tester </p>
   <p class="font-semi-bold"> Using Svelte and Tailwind with Tauri currently Testing for your CPS </p>
 </center>
-
-<style lang="postcss">
-    :global(html) {
-      background-color: theme(colors.gray.400);
-    }
-
-    
-  </style>
 
 <center>
   
@@ -97,3 +96,5 @@
 <center>
   <p class ="blur-sm hover:blur-none font-bold"> Result: {answer}</p>
 </center>
+
+</div>

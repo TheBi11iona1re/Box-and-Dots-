@@ -4,7 +4,7 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:5173",
-    "distDir": "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/node_modules/@sveltejs/kit/src/exports/vite/build"
+    "distDir": "../build"
   },
   "package": {
     "productName": "Box and Dots",
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.cpstest.myapp",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
