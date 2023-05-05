@@ -4,10 +4,10 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:5173",
-    "distDir": "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/node_modules/@sveltejs/kit/src/exports/vite/build"
+    "distDir": "../build"
   },
   "package": {
-    "productName": "Box and Dots",
+    "productName": "CPS Test",
     "version": "0.1.0"
   },
   "tauri": {
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.cpstest.myapp",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -58,7 +58,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "Box and Dots",
+        "title": "CPS Test",
         "width": 800
       }
     ]

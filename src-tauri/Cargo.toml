@@ -17,7 +17,8 @@ tauri-build = { version = "1.2.1", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2.4", features = [] }
+tauri = { version = "1.2.4", features = ["devtools"] }
+
 
 [features]
 # by default Tauri runs in production mode
@@ -26,3 +27,17 @@ default = [ "custom-protocol" ]
 # this feature is used for production builds where `devPath` points to the filesystem
 # DO NOT remove this
 custom-protocol = [ "tauri/custom-protocol" ]
+
+
+[target.x86_64-pc-windows-msvc]
+linker = "lld"
+rustflags = [
+  "-Lnative=/Users/username/xwin/crt/lib/x86_64",
+  "-Lnative=/Users/username/xwin/sdk/lib/um/x86_64",
+  "-Lnative=/Users/username/xwin/sdk/lib/ucrt/x86_64"
+]
+
+[patch.crates-io]
+tauri-winres = {git="https://github.com/tauri-apps/winres", branch="compile-with-embed-resource"}
+
+

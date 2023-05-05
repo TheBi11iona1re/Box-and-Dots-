@@ -1,6 +1,7 @@
+
 <script> 
 
-
+import "../app.css";
 
   let count = 0;
   function increment() {
@@ -40,7 +41,7 @@
     seconds = 0
   }
 
-  let answer = "mom";
+  let answer = "start clicking see how you compare to others!";
 
   function result() {
     if (cps < 5) {
@@ -48,7 +49,7 @@
     }
 
     else if (cps < 8 ){
-      answer = "You're Rabbit"
+      answer = "You're a Rabbit"
     }
 
     else if (cps < 11 ){
@@ -57,28 +58,26 @@
 
 
     else{
-      answer = "You're Allah"
+      answer = "You're a Professional"
     }
     return answer;
   }
 
 </script>
 
+
+
+<div class="bg-gray-400 h-screen w-screen ">
+  <!-- Your content here -->
+
+
 <center>
   
-  <h1 class="mt-[15px] text-4xl font-bold text-center">Main Menu</h1>
+  <h1 class="mt-[0px] text-4xl font-bold text-center">CPS Tester</h1>
 
-  <p class="text-2xl font-semi-bold">Box and Dots Beta / CPS Tester </p>
-  <p class="font-normal"> Using Svelte and Tailwind with Tauri currently Testing for your CPS </p>
+  <p class="text-2xl font-semi-bold">CPS Tester </p>
+  <p class="font-semi-bold"> Using Svelte and Tailwind with Tauri currently Testing for your CPS </p>
 </center>
-
-<style lang="postcss">
-    :global(html) {
-      background-color: theme(colors.gray.400);
-    }
-
-    
-  </style>
 
 <center>
   
@@ -95,5 +94,7 @@
 </center>
 
 <center>
-  <p class ="blur-sm hover:blur-none"> Result: {answer}</p>
+  <p class ="blur-sm hover:blur-none font-bold"> Result: {answer}</p>
 </center>
+
+</div>
