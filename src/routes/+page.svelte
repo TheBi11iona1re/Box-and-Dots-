@@ -1,12 +1,41 @@
-
-<script> 
+<script lang="ts">
 import { goto } from '$app/navigation';
 import "../app.css";
+let audioFile = "https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82";
+  // Get the container element
+  let container: HTMLElement;
+  // Declare a variable to store the current event listener
+  let listener: (event: MouseEvent) => void;
+  // Declare a reactive function for mouse movement
+  $: {
+    if (container) {
+      // Remove the old event listener if it exists
+      if (listener) {
+        container.removeEventListener("mousemove", listener);
+      }
+      // Define a new event listener function
+      listener = function(event: MouseEvent) {
+        // Get the mouse position relative to the container
+        let x = event.clientX - container.offsetLeft;
+        let y = event.clientY - container.offsetTop;
+        // Calculate the percentage of the mouse position
+        let xPercent = x / container.offsetWidth * 100;
+        let yPercent = y / container.offsetHeight * 100;
+        // Set the background position to the percentage
+        container.style.backgroundPosition = xPercent + "% " + yPercent + "%";
+      };
+      // Add the new event listener to the container
+      container.addEventListener("mousemove", listener);
+    }
+  }
 
 
 </script>
 
 <style>
+
+
+
     @font-face {
   font-family: "Minecraft";
   src: url("VCR_OSD_MONO_1.001.ttf");
@@ -15,9 +44,7 @@ import "../app.css";
 
 </style>
 
-<div style="width: 100vw; height: 100vh; background-image: url('https://thumbs.gfycat.com/UnfoldedRedJaguarundi-max-1mb.gif'); background-size: cover; position: relative;" >
-  <!-- Your content here -->
-
+<div bind:this={container} style="width: 100vw; height: 100vh; background-image: url('https://thumbs.gfycat.com/UnfoldedRedJaguarundi-max-1mb.gif'); background-size: 135%; position: relative;" >
 
 
 <center>
@@ -41,5 +68,15 @@ import "../app.css";
         Settings </button>
 </center>
  
+<body>
+    <audio src={audioFile} loop autoplay>
+      Your browser does not support the audio element.
+    </audio>
+  </body>
+
+
 <p class="font-minecraft text-gray-300 fixed bottom-0">©The_Bi11iona1re</p>
 </div>
+
+
+
