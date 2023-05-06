@@ -1,100 +1,45 @@
 
 <script> 
-
+import { goto } from '$app/navigation';
 import "../app.css";
 
-  let count = 0;
-  function increment() {
-    count += 1;
-  }
-
-  import { onMount } from 'svelte';
-  let seconds = 0;
-  onMount(() => {
-    const interval = setInterval(() => {
-      seconds++;
-      
-    }, 1000);
-    return () => {
- 
-      clearInterval(interval);
-      
-    };
-
-  });
-
-  let cps = 0;
-
-  const interval = setInterval(() => {
-    count++;
-    cps = seconds !== 0 ? count / seconds : 0;
-    cps = Math.round(cps);
-  }, 1000);
-
-  setTimeout(() => {
-    clearInterval(interval);
-  }, 2147483647);
-
-  function reset() {
-    count = 0
-    cps = 0
-    seconds = 0
-  }
-
-  let answer = "start clicking see how you compare to others!";
-
-  function result() {
-    if (cps < 5) {
-      answer = "You're a turtle";
-    }
-
-    else if (cps < 8 ){
-      answer = "You're a Rabbit"
-    }
-
-    else if (cps < 11 ){
-      answer = "You're a Cheetah"
-    }
-
-
-    else{
-      answer = "You're a Professional"
-    }
-    return answer;
-  }
 
 </script>
 
+<style>
+    @font-face {
+  font-family: "Minecraft";
+  src: url("VCR_OSD_MONO_1.001.ttf");
+}
 
 
-<div class="bg-gray-400 h-screen w-screen ">
+</style>
+
+<div style="width: 100vw; height: 100vh; background-image: url('https://thumbs.gfycat.com/UnfoldedRedJaguarundi-max-1mb.gif'); background-size: cover; position: relative;" >
   <!-- Your content here -->
 
 
-<center>
-  
-  <h1 class="mt-[0px] text-4xl font-bold text-center">CPS Tester</h1>
-
-  <p class="text-2xl font-semi-bold">CPS Tester </p>
-  <p class="font-semi-bold"> Using Svelte and Tailwind with Tauri currently Testing for your CPS </p>
-</center>
 
 <center>
   
-  <button class="ripple-bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[50px] rounded-full w-[600px] h-[200px] text-6xl font-bold text-center active:" on:click={increment} on:click={result}>
-    Click!
+    <h1 class="text-6xl mt-[0px] text-4xl drop-shadow-lg font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-300  to-blue-900 transform translate-y-[80px] font-minecraft">Dots and Boxes</h1>
+
+  <button class="ripple-bg-blue-600  g-clip-text bg-gradient-to-r from-blue-600 to-blue-900 hover:bg-blue-800   text-white transform translate-y-[100px] font-minecraft py-2 px-4 mt-[00px] rounded-full w-[600px] h-[200px] text-[90px] font-bold text-center active:" on:click={() => setTimeout(() => goto('/game'), 300)}>
+    Play!
   </button>
-</center>
-<center>
-  <button class="ripple-bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[10px] rounded-full w-[100px] h-[50px] text-2xl font-bold text-center active:" on:click={reset} > 
-  Reset </button>
-</center>
-<center class="mt-[15px] text-2xl font-bold text-center">
-  <p>CPS: {cps} Time: {seconds}</p>
+
+
+
+  
+
+
+
 </center>
 
 <center>
-  <p class ="blur-sm hover:blur-none font-bold"> Result: {answer}</p>
+    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" > 
+        Settings </button>
 </center>
-
+ 
+<p class="font-minecraft text-gray-300 fixed bottom-0">©The_Bi11iona1re</p>
 </div>

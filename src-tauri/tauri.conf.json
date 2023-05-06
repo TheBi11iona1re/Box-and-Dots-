@@ -7,7 +7,7 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "CPS Test",
+    "productName": "Dots and Boxes",
     "version": "0.1.0"
   },
   "tauri": {
@@ -58,7 +58,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "CPS Test",
+        "title": "Dots and Boxes",
         "width": 800
       }
     ]
