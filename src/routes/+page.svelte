@@ -4,7 +4,8 @@ import { sound } from 'svelte-sound';
 import { onMount } from 'svelte';
 import "../app.css";
 import "../app.css";
-  let clicked = false;
+let clicked = false;
+
   let audioFile: HTMLAudioElement = new Audio('https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82');
   audioFile.play();
   audioFile.loop = true
@@ -18,6 +19,7 @@ import "../app.css";
     }
     return true;
   }
+
 
 
   // Get the container element
@@ -87,7 +89,7 @@ import "../app.css";
 </center>
 
 <button class="text-blue-600 hover:text-blue-900 font-minecraft font-bold text-center fixed bottom-2 right-2 " on:click={mute}>
-  {clicked ? '🔊Unmute' : '🔇Mute'}
+  <img src={clicked ? 'https://i.imgur.com/arTIVuh.png' : 'https://i.imgur.com/ljVuBNm.png'} alt="sound icon" width="30px" height="30px" />
 </button>
 
 <p class="font-minecraft text-gray-300 fixed bottom-2 left-2">©The_Bi11iona1re</p>
