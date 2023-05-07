@@ -1,7 +1,25 @@
 <script lang="ts">
 import { goto } from '$app/navigation';
+import { sound } from 'svelte-sound';
+import { onMount } from 'svelte';
 import "../app.css";
-let audioFile = "https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82";
+import "../app.css";
+  let clicked = false;
+  let audioFile: HTMLAudioElement = new Audio('https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82');
+  audioFile.play();
+  audioFile.loop = true
+
+  function mute() {
+    clicked = !clicked;
+    if (audioFile.paused) {
+      audioFile.play();
+    } else {
+      audioFile.pause();
+    }
+    return true;
+  }
+
+
   // Get the container element
   let container: HTMLElement;
   // Declare a variable to store the current event listener
@@ -57,7 +75,7 @@ let audioFile = "https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82";
 
 
 
-  
+
 
 
 
@@ -67,16 +85,11 @@ let audioFile = "https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82";
     <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" > 
         Settings </button>
 </center>
- 
-<body>
-    <audio src={audioFile} loop autoplay>
-      Your browser does not support the audio element.
-    </audio>
-  </body>
 
+<button class="text-blue-600 hover:text-blue-900 font-minecraft font-bold text-center fixed bottom-2 right-2 " on:click={mute}>
+  {clicked ? '🔊Unmute' : '🔇Mute'}
+</button>
 
-<p class="font-minecraft text-gray-300 fixed bottom-0">©The_Bi11iona1re</p>
+<p class="font-minecraft text-gray-300 fixed bottom-2 left-2">©The_Bi11iona1re</p>
 </div>
-
-
 
