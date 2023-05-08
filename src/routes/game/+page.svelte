@@ -2,7 +2,8 @@
   import audioFile from "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/+page.svelte";
   import { goto } from '$app/navigation';
   import { sound } from 'svelte-sound';
-
+  import { onMount } from 'svelte';
+  let data = '';
   // Check if the page has been reloaded or not
   var reloaded = localStorage.getItem("reloaded");
 
@@ -17,6 +18,16 @@
     localStorage.removeItem("reloaded");
     // Your normal code here
   }
+
+
+
+
+
+  onMount(() => {
+    data = localStorage.getItem('data');
+  });
+
+
 </script>
 
-<p>Game</p>
+<p>Game{data}</p>

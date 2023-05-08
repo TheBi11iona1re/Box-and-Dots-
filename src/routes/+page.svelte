@@ -6,6 +6,24 @@ import "../app.css";
 import "../app.css";
 let clicked = false;
 
+let showModal = false;
+
+function handleInput(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === 'Enter') {
+      localStorage.setItem('data', event.target.value);
+    }
+  }
+
+  function handleClick() {
+    const input = document.querySelector('input');
+    localStorage.setItem('data', input.value);
+  }
+
+function popup() {
+    var popup = document.getElementById("myPopup") as HTMLDivElement;
+    popup.classList.toggle("show");
+  }
+
   let audioFile: HTMLAudioElement = new Audio('https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82');
   audioFile.play();
   audioFile.loop = true
@@ -49,17 +67,19 @@ let clicked = false;
     }
   }
 
+  
+  
 
 </script>
 
 <style>
 
 
-
-    @font-face {
+@font-face {
   font-family: "Minecraft";
   src: url("VCR_OSD_MONO_1.001.ttf");
 }
+
 
 
 </style>
@@ -95,3 +115,8 @@ let clicked = false;
 <p class="font-minecraft text-gray-300 fixed bottom-2 left-2">©The_Bi11iona1re</p>
 </div>
 
+
+<div class="flex">
+  <input class="border border-gray-400 p-2 rounded-lg w-full" type="text" placeholder="Enter your text here" on:keydown={handleInput}>
+  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" on:click={handleClick}>Save</button>
+</div>
