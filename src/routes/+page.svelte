@@ -1,28 +1,19 @@
 <script lang="ts">
+
 import { goto } from '$app/navigation';
 import { sound } from 'svelte-sound';
 import { onMount } from 'svelte';
 import "../app.css";
-import "../app.css";
+import j$ from 'jquery';
+
+
 let clicked = false;
+let showPopup = false;
 
-let showModal = false;
 
-function handleInput(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') {
-      localStorage.setItem('data', event.target.value);
-    }
-  }
 
-  function handleClick() {
-    const input = document.querySelector('input');
-    localStorage.setItem('data', input.value);
-  }
+ 
 
-function popup() {
-    var popup = document.getElementById("myPopup") as HTMLDivElement;
-    popup.classList.toggle("show");
-  }
 
   let audioFile: HTMLAudioElement = new Audio('https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82');
   audioFile.play();
@@ -74,6 +65,8 @@ function popup() {
 
 <style>
 
+/* Popup box BEGIN */
+
 
 @font-face {
   font-family: "Minecraft";
@@ -104,7 +97,7 @@ function popup() {
 </center>
 
 <center>
-    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" > 
+    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/settings'), 300)}> 
         Settings </button>
 </center>
 
@@ -116,7 +109,3 @@ function popup() {
 </div>
 
 
-<div class="flex">
-  <input class="border border-gray-400 p-2 rounded-lg w-full" type="text" placeholder="Enter your text here" on:keydown={handleInput}>
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" on:click={handleClick}>Save</button>
-</div>
