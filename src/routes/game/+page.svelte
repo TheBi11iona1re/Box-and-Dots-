@@ -7,7 +7,6 @@
   let showModal = false
   let data = '';
 
-
   // Check if the page has been reloaded or not
   var reloaded = localStorage.getItem("reloaded");
 
@@ -55,25 +54,83 @@
 let scoreSound: HTMLAudioElement; // declare a variable for the sound effect
 
 
+let container: HTMLElement;
+  // Declare a variable to store the current event listener
+  let listener: (event: MouseEvent) => void;
+  // Declare a reactive function for mouse movement
+  $: {
+    if (container) {
+      // Remove the old event listener if it exists
+      if (listener) {
+        container.removeEventListener("mousemove", listener);
+      }
+      // Define a new event listener function
+      listener = function(event: MouseEvent) {
+        // Get the mouse position relative to the container
+        let x = event.clientX - container.offsetLeft;
+        let y = event.clientY - container.offsetTop;
+        // Calculate the percentage of the mouse position
+        let xPercent = x / container.offsetWidth * 100;
+        let yPercent = y / container.offsetHeight * 100;
+        // Set the background position to the percentage
+        container.style.backgroundPosition = xPercent + "% " + yPercent + "%";
+      };
+      // Add the new event listener to the container
+      container.addEventListener("mousemove", listener);
+    }
+  }
 
 
 </script>
 
-<audio
+<style>
+
+</style>  
+
+
+<div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4'); background-size: 125%; position: fixed; top: 0; left: 0; bottom: 0; right: 0;"class="">
+
+  <audio
   src="https://audio.jukehost.co.uk/1Do1qes84j02HAhuxaMy1WI8SJpd0jMX" 
   preload="auto" 
   bind:this={buttonSound} 
-></audio>
+  ></audio>
+  
+  <div style="">
+    <button class="fixed bottom-[25px] left-1/2 transform -translate-x-1/2 
+    ripple-bg-gray-600 g-clip-text bg-gradient-to-r
+     from-gray-600 to-gray-800 hover:bg-blue-800
+      hover:bg-gray-800 text-white font-bold py-2
+       px-4 mt-[10px] rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}> 
+    Main Menu </button>
+    </div>
 
-<button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[10px]   rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}> 
-  Main Menu </button>
+  <div>
+  <button class="   fixed top-[20px]  left-1/2 transform -translate-x-1/2 ripple-bg-gray-600 g-clip-text bg-gradient-to-r
+  from-gray-600 to-gray-800 hover:bg-blue-800
+   hover:bg-gray-800 text-white font-bold py-2
+    px-4 mt-[10px] rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => {
+  if (clicked) { // check if clicked is true
+  buttonSound.volume = 0.4; // set the volume to 0.4
+  buttonSound.play(); // play the sound effect
+  }
+  }}>sound effect</button>
+  
+  <div class="grid place-items-center h-screen">
+    <div style="background: rgba( 98, 98, 98, 0.15 );box-shadow: 0 8px 32px 0 rgba( 0, 0, 0, 0.37 );backdrop-filter: blur( 13px );-webkit-backdrop-filter: blur( 13px );border: 1.25px solid rgba( 255, 255, 255, 0.18 );" class="rounded w-72 h-72 flex items-center justify-center">
+    <p class="font-minecraft text-gray-300 text-3xl">Dots and Boxes</p>
+    </div>
+    </div>
+    
+    
+    
 
-
-  <button on:click={() => {
-    if (clicked) { // check if clicked is true
-      buttonSound.volume = 0.4; // set the volume to 0.4
-      buttonSound.play(); // play the sound effect
-    }
-  }}>Click me to play a sound effect</button>
-
-<p>Ai = {gameAI} Sound = {clicked}</p>
+</div>
+  
+  <p class="fixed bottom-[60px] fixed left-[125px] font-minecraft text-gray-300 text-2xl"> Ai = {gameAI}</p>
+  <p class="fixed bottom-[60px] fixed right-[80px] font-minecraft text-gray-300 text-2xl"> Sound = {clicked}</p>
+  
+  <p class="font-minecraft text-gray-300 fixed bottom-2 left-2 text-sm">©The_Bi11iona1re</p>
+  
+  </div>
+ 

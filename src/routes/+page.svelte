@@ -1,8 +1,9 @@
 <script lang="ts">
-
 import { goto } from '$app/navigation';
 import { sound } from 'svelte-sound';
 import { onMount } from 'svelte';
+import { appWindow } from '@tauri-apps/api/window'
+import { invoke } from '@tauri-apps/api/tauri'
 import "../app.css";
 
     // Check if the page has been reloaded or not
@@ -40,6 +41,7 @@ let clicked = false;
     localStorage.setItem("clicked", String(clicked)); // store clicked in localStorage
     return true;
   }
+
 
   onMount(() => {
     // get clicked from localStorage on page load
