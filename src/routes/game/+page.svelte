@@ -91,7 +91,7 @@ let container: HTMLElement;
 <div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4'); background-size: 125%; position: fixed; top: 0; left: 0; bottom: 0; right: 0;"class="">
 
   <audio
-  src="https://audio.jukehost.co.uk/1Do1qes84j02HAhuxaMy1WI8SJpd0jMX" 
+  src="https://audio.jukehost.co.uk/U9SJhg69MqIuCNKJf3dK9bOXa0Co0CeQ" 
   preload="auto" 
   bind:this={buttonSound} 
   ></audio>
@@ -106,18 +106,18 @@ let container: HTMLElement;
     </div>
 
   <div>
-  <button class="   fixed top-[20px]  left-1/2 transform -translate-x-1/2 ripple-bg-gray-600 g-clip-text bg-gradient-to-r
-  from-gray-600 to-gray-800 hover:bg-blue-800
-   hover:bg-gray-800 text-white font-bold py-2
+  <button class="   fixed top-[20px]  left-1/2 transform -translate-x-1/2 ripple-bg-green-700 g-clip-text bg-gradient-to-r
+  from-green-700 to-green-900 hover:bg-green-800
+   hover:bg-green-800 text-white font-bold py-2
     px-4 mt-[10px] rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => {
   if (clicked) { // check if clicked is true
   buttonSound.volume = 0.4; // set the volume to 0.4
   buttonSound.play(); // play the sound effect
   }
-  }}>sound effect</button>
+  }}>sound effects</button>
   
   <div class="grid place-items-center h-screen">
-    <div style="background: rgba( 98, 98, 98, 0.15 );box-shadow: 0 8px 32px 0 rgba( 0, 0, 0, 0.37 );backdrop-filter: blur( 13px );-webkit-backdrop-filter: blur( 13px );border: 1.25px solid rgba( 255, 255, 255, 0.18 );" class="rounded w-72 h-72 flex items-center justify-center">
+    <div style="background: rgba( 98, 98, 98, 0.15 );box-shadow: 0 8px 32px 0 rgba( 0, 0, 0, 0.37 );backdrop-filter: blur( 13px );-webkit-backdrop-filter: blur( 13px );border: 1.25px solid rgba( 255, 255, 255, 0.18 );" class="rounded-lg w-72 h-72 flex items-center justify-center">
     <p class="font-minecraft text-gray-300 text-3xl">Dots and Boxes</p>
     </div>
     </div>
