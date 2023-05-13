@@ -2,11 +2,27 @@
   import pop from "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/+page.svelte";
   import { goto } from '$app/navigation';
   import { sound } from 'svelte-sound';
+  import { tweened } from 'svelte/motion';
   import { onMount } from 'svelte';
   let buttonSound: HTMLAudioElement;
   let showModal = false
   let data = '';
 
+  let size = 0;
+
+  function resize() {
+    size = Math.min(window.innerWidth, window.innerHeight) / 2;
+  }
+
+  onMount(() => {
+    // Call the resize function when the page is loaded
+    resize();
+    // Add an event listener for window resize
+    window.addEventListener('resize', resize);
+  });
+
+  
+  
   // Check if the page has been reloaded or not
   var reloaded = localStorage.getItem("reloaded");
 
@@ -81,10 +97,33 @@ let container: HTMLElement;
   }
 
 
+
+
 </script>
 
 <style>
+  .square {
+    background: rgba(98, 98, 98, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+    border: 1.25px solid rgba(255, 255, 255, 0.18);
+    transition: width 0.4s, height 0.4s;
+  }
 
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+    display: grid;
+    place-items: center;
+
+    
+    position: absolute; /* Add this to position the dots absolutely */
+  }
+
+  
 </style>  
 
 
@@ -116,12 +155,21 @@ let container: HTMLElement;
   }
   }}>sound effects</button>
   
-  <div class="grid place-items-center h-screen">
-    <div style="background: rgba( 98, 98, 98, 0.15 );box-shadow: 0 8px 32px 0 rgba( 0, 0, 0, 0.37 );backdrop-filter: blur( 13px );-webkit-backdrop-filter: blur( 13px );border: 1.25px solid rgba( 255, 255, 255, 0.18 );" class="rounded-lg w-72 h-72 flex items-center justify-center">
-    <p class="font-minecraft text-gray-300 text-3xl">Dots and Boxes</p>
-    </div>
-    </div>
-    
+  <div class="h-screen flex items-center justify-center">
+<!-- Use flexbox to center the square -->
+
+
+
+
+<div
+  class="square rounded-lg flex items-center justify-center"
+  style="width: {size}px; height: {size}px;"
+>
+  <!-- Use a nested loop to create a 5x5 grid of dots -->
+
+  <p class="font-minecraft text-gray-300 text-3xl">Dots and Boxes</p>
+</div>
+</div>
     
     
 
