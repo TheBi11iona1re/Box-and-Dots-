@@ -7,21 +7,77 @@
   let buttonSound: HTMLAudioElement;
   let showModal = false
   let data = '';
-
+  let canvas: HTMLCanvasElement;
+  let ctx: CanvasRenderingContext2D;
   let size = 0;
+  let aitwo = 'mom';
 
   function resize() {
     size = Math.min(window.innerWidth, window.innerHeight) / 2;
+     // Set the canvas width and height to match the size
+     canvas.width = size;
+    canvas.height = size;
+    // Draw the dots and lines on the canvas
+    draw();
   }
 
+
+  function draw() {
+    // Clear the canvas
+    ctx.clearRect(0, 0, size, size);
+    // Define a constant for the number of rows and columns
+    const N = 5;
+    // Define a constant for the dot size
+    const dotSize = 10;
+    // Calculate the space between the dots based on the size and dot size
+    const space = (size - dotSize * N) / (N + 1);
+    // Use a dark gray color for the dots and lines
+    ctx.fillStyle = '#c7c7c7';
+    ctx.strokeStyle = '#c7c7c7';
+    // Use a nested loop to draw the dots and lines
+    for (let i = 0; i < N; i++) {
+      for (let j = 0; j < N; j++) {
+        // Calculate the x and y coordinates of the dot
+        let x = space + (dotSize + space) * i + dotSize / 2;
+        let y = space + (dotSize + space) * j + dotSize / 2;
+        // Draw a circle at the coordinates
+        ctx.beginPath();
+        ctx.arc(x, y, dotSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+        // Draw horizontal lines between the dots
+        if (i < N - 1) {
+          let x2 = x + dotSize + space;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x2, y);
+          ctx.stroke();
+        }
+        // Draw vertical lines between the dots
+        if (j < N - 1) {
+          let y2 = y + dotSize + space;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x, y2);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+
   onMount(() => {
+    // Get the canvas context
+    ctx = canvas.getContext('2d');
     // Call the resize function when the page is loaded
     resize();
     // Add an event listener for window resize
     window.addEventListener('resize', resize);
   });
 
-  
+  // Define a constant for the number of rows and columns
+  const N = 5;
+  // Create an array of numbers from 0 to N-1
+  const range = Array.from({ length: N }, (_, i) => i);
   
   // Check if the page has been reloaded or not
   var reloaded = localStorage.getItem("reloaded");
@@ -96,8 +152,12 @@ let container: HTMLElement;
     }
   }
 
+if (gameAI === true) {
+  aitwo = "AI"
 
-
+} else {
+  aitwo = "2"
+}
 
 </script>
 
@@ -109,25 +169,19 @@ let container: HTMLElement;
     -webkit-backdrop-filter: blur(13px);
     border: 1.25px solid rgba(255, 255, 255, 0.18);
     transition: width 0.4s, height 0.4s;
+    /* Use flexbox to align the dots in a grid */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
   }
 
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: white;
-    display: grid;
-    place-items: center;
-
-    
-    position: absolute; /* Add this to position the dots absolutely */
-  }
 
   
 </style>  
 
 
-<div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4'); background-size: 125%; position: fixed; top: 0; left: 0; bottom: 0; right: 0;"class="">
+<div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4'); background-size: 125%; position: fixed; top: 0; left: 0; bottom: 0; right: 0;"></div>
 
   <audio
   src="https://audio.jukehost.co.uk/1Do1qes84j02HAhuxaMy1WI8SJpd0jMX" 
@@ -148,12 +202,12 @@ let container: HTMLElement;
   <button class="   fixed top-[20px]  left-1/2 transform -translate-x-1/2 ripple-bg-green-700 g-clip-text bg-gradient-to-r
   from-green-700 to-green-900 hover:bg-green-800
    hover:bg-green-800 text-white font-bold py-2
-    px-4 mt-[10px] rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => {
+    px-4 mt-[10px] rounded-full w-[150px] h-[50px] text-2xl font-minecraft text-center active:" on:click={() => {
   if (clicked) { // check if clicked is true
   buttonSound.volume = 0.4; // set the volume to 0.4
   buttonSound.play(); // play the sound effect
   }
-  }}>sound effects</button>
+  }}>sound</button>
   
   <div class="h-screen flex items-center justify-center">
 <!-- Use flexbox to center the square -->
@@ -161,22 +215,28 @@ let container: HTMLElement;
 
 
 
-<div
-  class="square rounded-lg flex items-center justify-center"
-  style="width: {size}px; height: {size}px;"
->
-  <!-- Use a nested loop to create a 5x5 grid of dots -->
 
-  <p class="font-minecraft text-gray-300 text-3xl">Dots and Boxes</p>
+<div class="square rounded-lg" style="width: {size}px; height: {size}px;">
+  <!-- Use a canvas element to draw the dots and lines -->
+  <canvas bind:this={canvas} />
 </div>
-</div>
-    
     
 
 </div>
-  
+  <p class="fixed top-[20px] fixed left-[125px] font-minecraft text-red-600 text-2xl"> Player 1</p>
+  <p class="fixed top-[20px] fixed left-[125px] font-minecraft text-red-600 text-2xl blur-sm"> Player 1</p>
+  <p class="fixed top-[20px] fixed left-[125px] font-minecraft text-red-600 text-2xl blur-2xl"> Player 1</p>
+  <p class="fixed top-[50px] fixed left-[130px] font-minecraft text-red-600 text-lg"> Score = 0</p>
+  <p class="fixed top-[50px] fixed left-[130px] font-minecraft text-red-600 text-lg blur-sm"> Score = 0</p>
+  <p class="fixed top-[50px] fixed left-[130px] font-minecraft text-red-600 text-lg blur-lg"> Score = 0</p>
   <p class="fixed bottom-[60px] fixed left-[125px] font-minecraft text-gray-300 text-2xl"> Ai = {gameAI}</p>
   <p class="fixed bottom-[60px] fixed right-[80px] font-minecraft text-gray-300 text-2xl"> Sound = {clicked}</p>
+  <p class="fixed top-[20px] fixed right-[100px] font-minecraft text-blue-600 text-2xl"> Player {aitwo}</p>
+  <p class="fixed top-[20px] fixed right-[100px] font-minecraft text-blue-600 text-2xl blur-sm"> Player {aitwo}</p>
+  <p class="fixed top-[20px] fixed right-[100px] font-minecraft text-blue-600 text-2xl blur-2xl"> Player {aitwo}</p>
+  <p class="fixed top-[50px] fixed right-[110px] font-minecraft text-blue-600 text-lg"> Score = 0</p>
+  <p class="fixed top-[50px] fixed right-[110px] font-minecraft text-blue-600 text-lg blur-sm"> Score = 0</p>
+  <p class="fixed top-[50px] fixed right-[110px] font-minecraft text-blue-600 text-lg blur-lg"> Score = 0</p>
   
   <p class="font-minecraft text-gray-300 fixed bottom-2 left-2 text-sm">©The_Bi11iona1re</p>
   
