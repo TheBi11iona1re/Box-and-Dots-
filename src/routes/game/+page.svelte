@@ -11,6 +11,15 @@
   let ctx: CanvasRenderingContext2D;
   let size = 0;
   let aitwo = 'mom';
+  import { writable } from 'svelte/store';
+  const currentPlayer = writable(1); // initialize with 1
+  import P5 from 'p5-svelte';
+  let player = $currentPlayer;
+
+
+  function switchPlayer() {
+  currentPlayer.update(n => n === 1 ? 2 : 1); // switch between 1 and 2
+}
 
   function resize() {
     size = Math.min(window.innerWidth, window.innerHeight) / 2;
@@ -21,48 +30,48 @@
     draw();
   }
 
+  
 
   function draw() {
-    // Clear the canvas
-    ctx.clearRect(0, 0, size, size);
-    // Define a constant for the number of rows and columns
-    const N = 5;
-    // Define a constant for the dot size
-    const dotSize = 10;
-    // Calculate the space between the dots based on the size and dot size
-    const space = (size - dotSize * N) / (N + 1);
-    // Use a dark gray color for the dots and lines
-    ctx.fillStyle = '#c7c7c7';
-    ctx.strokeStyle = '#c7c7c7';
-    // Use a nested loop to draw the dots and lines
-    for (let i = 0; i < N; i++) {
-      for (let j = 0; j < N; j++) {
-        // Calculate the x and y coordinates of the dot
-        let x = space + (dotSize + space) * i + dotSize / 2;
-        let y = space + (dotSize + space) * j + dotSize / 2;
-        // Draw a circle at the coordinates
+  // Clear the canvas
+  ctx.clearRect(0, 0, size, size);
+  // Define a constant for the number of rows and columns
+  const N = 10;
+  // Define a constant for the dot size
+  const dotSize = 10;
+  // Calculate the space between the dots based on the size and dot size
+  const space = (size - dotSize * N) / (N + 1);
+  // Use a dark gray color for the dots and lines
+  ctx.fillStyle = '#c7c7c7';
+  ctx.strokeStyle = '#c7c7c7';
+  // Use a nested loop to draw the dots and lines
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      // Calculate the x and y coordinates of the dot
+      let x = space + (dotSize + space) * i + dotSize / 2;
+      let y = space + (dotSize + space) * j + dotSize / 2;
+      // Draw the dot
+
+      // Draw the line
+      if (i > 0) {
+        let x2 = space + (dotSize + space) * (i - 1) + dotSize / 2;
+        let y2 = y;
         ctx.beginPath();
-        ctx.arc(x, y, dotSize / 2, 0, Math.PI * 2);
-        ctx.fill();
-        // Draw horizontal lines between the dots
-        if (i < N - 1) {
-          let x2 = x + dotSize + space;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x2, y);
-          ctx.stroke();
-        }
-        // Draw vertical lines between the dots
-        if (j < N - 1) {
-          let y2 = y + dotSize + space;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x, y2);
-          ctx.stroke();
-        }
+        ctx.moveTo(x, y);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+      if (j > 0) {
+        let x2 = x;
+        let y2 = space + (dotSize + space) * (j - 1) + dotSize / 2;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
       }
     }
   }
+}
 
 
   onMount(() => {
@@ -161,6 +170,7 @@ if (gameAI === true) {
 
 </script>
 
+
 <style>
   .square {
     background: rgba(98, 98, 98, 0.15);
@@ -179,6 +189,7 @@ if (gameAI === true) {
 
   
 </style>  
+
 
 
 <div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4'); background-size: 125%; position: fixed; top: 0; left: 0; bottom: 0; right: 0;"></div>
@@ -221,6 +232,7 @@ if (gameAI === true) {
   <canvas bind:this={canvas} />
 </div>
     
+
 
 </div>
   <p class="fixed top-[20px] fixed left-[125px] font-minecraft text-red-600 text-2xl"> Player 1</p>

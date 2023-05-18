@@ -5,6 +5,8 @@ import { onMount } from 'svelte';
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api/tauri'
 import "../app.css";
+import { message } from '@tauri-apps/api/dialog';
+
 
     // Check if the page has been reloaded or not
     var reloaded = localStorage.getItem("reloaded");
@@ -123,6 +125,10 @@ let clicked = false;
     <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/settings'), 200)}> 
         Settings </button>
 </center>
+
+<button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[20px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test'), 200)}> 
+  Test </button>
+
 
 <button
   class="text-blue-600 hover:text-blue-900 font-minecraft font-bold text-center fixed bottom-2 right-2 "

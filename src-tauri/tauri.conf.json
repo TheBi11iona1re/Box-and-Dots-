@@ -15,17 +15,16 @@
 			"fs": {
 				"all": true
 			},
-			"window": {
-				"all": false,
-				"close": true,
-				"hide": true,
-				"show": true,
-				"maximize": true,
-				"minimize": true,
-				"unmaximize": true,
-				"unminimize": true,
-				"startDragging": true
-			}
+			"dialog": {
+				"all": true, 
+       			 "ask": true,
+       			 "confirm": true,
+       			 "message": true,
+       			 "open": true,
+       			 "save": true 
+				}
+
+
 		},
 		"bundle": {
 			"active": true,

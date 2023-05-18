@@ -3,7 +3,6 @@
     import { goto } from '$app/navigation';
     import { sound } from 'svelte-sound';
     import { onMount } from 'svelte';
-  
     let gameAI = false
     let showModal = false
     let data = '';
