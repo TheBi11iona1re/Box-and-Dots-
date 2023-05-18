@@ -67,7 +67,7 @@
 
   
 <div style="width: 100vw; height: 100vh; background-size: 135%; position: relative;">
-    <div bind:this={container} style="background-image: url('https://thumbs.gfycat.com/UnfoldedRedJaguarundi-max-1mb.gif'); background-size: 135%; width: 100%; height: 100%;" class="filter blur-sm brightness-75"></div>
+    <div bind:this={container} style="background-image: url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; width: 100%; height: 100%;" class="filter blur-sm brightness-75"></div>
     <div class="absolute top-[80px] left-1/2 transform -translate-x-1/2 ">
         <h1 class="font-minecraft text-6xl text-transparent bg-clip-text bg-gradient-to-r from-blue-300  to-blue-900 ">Settings</h1>
         <button class=" font-minecraf">

@@ -102,7 +102,7 @@ let clicked = false;
 
 </style>
 
-<div bind:this={container} style="width: 100vw; height: 100vh; background-image: url('https://thumbs.gfycat.com/UnfoldedRedJaguarundi-max-1mb.gif'); background-size: 135%; position: relative;" >
+<div bind:this={container} style="width: 100vw; height: 100vh; background-image: url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; position: relative;" >
 
 
 <center>
