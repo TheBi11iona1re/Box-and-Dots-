@@ -1,6 +1,5 @@
 
 <body>
-    
     <table id="gameBoard"></table>
     
     <script lang="ts">
@@ -195,8 +194,31 @@ function gameOver(symbol) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longest Line Game</title>
-    <p>hi</p>
+
     <style>
+          .board {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 0px;
+    width: 300px;
+    height: 300px;
+  }
+  .cell {
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .cell.P {
+    background-color: #4040ed;
+  }
+  .cell.Ai {
+    background-color: #ed4040;
+  }
         body {
             font-family: Arial, sans-serif;
             display: flex;

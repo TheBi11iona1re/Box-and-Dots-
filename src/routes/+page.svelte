@@ -208,6 +208,7 @@ dialog {
 
   <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test2'), 200)}> 
     Test 2 </button>
+
    
 
 
