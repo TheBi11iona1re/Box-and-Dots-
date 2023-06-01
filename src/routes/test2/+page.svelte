@@ -16,37 +16,44 @@
   const currentPlayer = writable(1); // initialize with 1
   import P5 from 'p5-svelte';
   let player = $currentPlayer;
-  const gridSize = 10;
+
   const gameBoard = document.getElementById("gameBoard");
   const playerSymbol = 'P';
   const computerSymbol = 'C';
+  const gridSize = 10;
+    const emptyCell = 0;
+    const playerCell = 1;
+    const computerCell = 2;
   
-  let dots = Array.from(
-  {length: gridSize}, 
-  () => Array.from(
-    {length: gridSize}, 
-    () => ({ connected: false, player: null, connections: [] })
-  )
-);
+  
+  let grid = writable(Array(gridSize).fill(Array(gridSize).fill(emptyCell)));
+  
+  function handleClick(row: number, col: number) {
+    grid.update((g) => {
+      const newGrid = g.map((r) => r.slice());
+      newGrid[row][col] = playerCell;
+      return newGrid;
+    });
+    makeComputerMove();
+  }
 
+  function makeComputerMove() {
+    // Implement your computer move logic here
+  }
 
-
-
-  function switchPlayer() {
-  currentPlayer.update(n => n === 1 ? 2 : 1); // switch between 1 and 2
-}
-
-let state = {
-  currentPlayer: 1,
-  moves: [],
-};
+  function cellClass(cell: number) {
+    return cell === playerCell
+      ? 'bg-blue-500'
+      : cell === computerCell
+      ? 'bg-red-500'
+      : 'bg-white';
+  }
 
 
   function resize() {
     size = Math.min(window.innerWidth, window.innerHeight) / 2;
      // Set the canvas width and height to match the size
-     canvas.width = size;
-    canvas.height = size;
+
     // Draw the dots and lines on the canvas
     draw();
   }
@@ -55,48 +62,9 @@ let state = {
 
 
   function draw() { 
-  // Clear the canvas
-  ctx.clearRect(0, 0, size, size);
+ 
+        };
 
-  // Define a constant for the dot size
-  const dotSize = 10;
-  // Calculate the space between the dots based on the size and dot size
-  const space = (size - dotSize * gridSize) / (gridSize + 1);
-
-  // Use a dark gray color for the dots and lines
-  ctx.fillStyle = '#c7c7c7';
-  ctx.strokeStyle = '#c7c7c7';
-
-  // Use a nested loop to draw the dots and lines
-  for (let i = 0; i < gridSize; i++) {
-    for (let j = 0; j < gridSize; j++) {
-      // Calculate the x and y coordinates of the dot
-      let x = space + (dotSize + space) * i + dotSize / 2;
-      let y = space + (dotSize + space) * j + dotSize / 2;
-
-      // Draw the dot
-      ctx.beginPath();
-      ctx.arc(x, y, dotSize / 2, 0, Math.PI * 2, true);
-      ctx.fill();
-
-      // Draw the lines for connected dots
-      if (dots[i][j].connected) {
-        dots[i][j].connections.forEach((connection) => {
-          let x2 = space + (dotSize + space) * connection.x + dotSize / 2;
-          let y2 = space + (dotSize + space) * connection.y + dotSize / 2;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x2, y2);
-          ctx.stroke();
-        });
-      }
-
-
-
-      
-    }
-  }
-}
 
 
 
@@ -106,7 +74,6 @@ let state = {
 
   onMount(() => {
     // Get the canvas context
-    ctx = canvas.getContext('2d');
     // Call the resize function when the page is loaded
     resize();
     // Add an event listener for window resize
@@ -223,6 +190,15 @@ if (gameAI === true) {
       align-items: center;
       justify-content: center;
   }
+  .grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 2px;
+    }
+    .cell {
+      height: 30px;
+      border: 1px solid #ccc;
+    }
 
 </style>
 
@@ -246,6 +222,7 @@ if (gameAI === true) {
     </div>
 
   <div>
+    
   <button class="   fixed top-[20px]  left-1/2 transform -translate-x-1/2 ripple-bg-green-700 g-clip-text bg-gradient-to-r
   from-green-700 to-green-900 hover:bg-green-800
    hover:bg-green-800 text-white font-bold py-2
@@ -260,12 +237,20 @@ if (gameAI === true) {
 <!-- Use flexbox to center the square -->
 
 
-
+<div class="grid">
+  {#each $grid as row, rowIndex}
+    {#each row as cell, colIndex}
+      <div
+        class="cell {cellClass(cell)}"
+        on:click={() => handleClick(rowIndex, colIndex)}
+      ></div>
+    {/each}
+  {/each}
+</div>
 
 
 <div class="square rounded-lg" style="width: {size}px; height: {size}px;">
-  <!-- Use a canvas element to draw the dots and lines -->
-  <canvas bind:this={canvas} />
+
 </div>
     
 

@@ -8,6 +8,7 @@ import "../app.css";
 import { message } from '@tauri-apps/api/dialog';
 
 
+
     // Check if the page has been reloaded or not
     var reloaded = localStorage.getItem("reloaded");
   
@@ -126,8 +127,11 @@ let clicked = false;
         Settings </button>
 </center>
 
-<button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[20px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test'), 200)}> 
-  Test </button>
+<button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test'), 200)}> 
+  Test</button>
+
+  <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test2'), 200)}> 
+    Test 2 </button>
 
 
 <button
