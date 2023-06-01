@@ -6,6 +6,21 @@ import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api/tauri'
 import "../app.css";
 import { message } from '@tauri-apps/api/dialog';
+let gameAI = false
+
+
+  
+function handleToggle(event: KeyboardEvent<HTMLInputElement>) {
+    gameAI = event.target.checked; // assign the value of the checkbox to the variable
+    localStorage.setItem("gameAI", gameAI.toString()); // store the variable in local storage
+  }
+
+  let showDialog = false;
+  
+  function toggleDialog() {
+    showDialog = !showDialog;
+
+}
 
 
 
@@ -101,6 +116,41 @@ let clicked = false;
 
 
 
+dialog {
+  font-family: "Minecraft";
+  position: absolute;
+  top: 50%; /* Adjust this value to suit your needs */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  background: rgba(98, 98, 98, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      backdrop-filter: blur(13px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.25px solid rgba(255, 255, 255, 0.18);
+      transition: width 0.4s, height 0.4s;
+}
+
+dialog::backdrop {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+    animation: fade-in 1s;
+}
+
+.blur {
+    backdrop-filter: blur(10px);
+}
+
+
+  
+  .overlay.open {
+    display: block;
+  }
+
+
 </style>
 
 <div bind:this={container} style="width: 100vw; height: 100vh; background-image: url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; position: relative;" >
@@ -122,16 +172,37 @@ let clicked = false;
 
 </center>
 
+
+
 <center>
-    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/settings'), 200)}> 
+    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={toggleDialog} > 
         Settings </button>
 </center>
+
+
+
+<dialog open={showDialog}>
+  <h1 class="text-2xl text-white text-opacity-65">Settings</h1>
+  <p>
+    <button class="font-minecraft">
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" value="" class="sr-only peer" on:change={handleToggle} />
+        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        <span class="ml-3 text-sm font-minecraft text-gray-900 dark:text-gray-800">Toggle AI</span>
+      </label>
+    </button>
+  </p>
+  <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={toggleDialog}>Close</button>
+</dialog>
+
+
 
 <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test'), 200)}> 
   Test</button>
 
   <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test2'), 200)}> 
     Test 2 </button>
+   
 
 
 <button
