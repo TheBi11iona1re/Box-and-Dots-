@@ -135,21 +135,27 @@ dialog {
       transition: width 0.4s, height 0.4s;
 }
 
-dialog::backdrop {
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
-    animation: fade-in 1s;
-}
-
-.blur {
-    backdrop-filter: blur(10px);
-}
 
 
+.backdrop.open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Ensure this appears below your dialog */
+  display: none;
+  -webkit-backdrop-filter: blur(10px) brightness(0.69);
+  display: block;
+  animation: fadeIn 0.5s;
+  opacity: 1;
   
-  .overlay.open {
-    display: block;
-  }
+}
 
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 
 </style>
 
@@ -179,10 +185,10 @@ dialog::backdrop {
         Settings </button>
 </center>
 
-
+<div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop'}></div>
 
 <dialog open={showDialog}>
-  <h1 class="text-2xl text-white text-opacity-65">Settings</h1>
+  <h1 class="text-2xl text-white text-opacity-60">Settings</h1>
   <p>
     <button class="font-minecraft">
       <label class="relative inline-flex items-center cursor-pointer">
