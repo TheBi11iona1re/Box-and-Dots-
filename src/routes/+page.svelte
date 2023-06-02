@@ -7,8 +7,10 @@ import { invoke } from '@tauri-apps/api/tauri'
 import "../app.css";
 import { message } from '@tauri-apps/api/dialog';
 let gameAI = true
+let easyAi = true;
 
 gameAI = localStorage.getItem("gameAI") === "true";
+easyAi = localStorage.getItem("easyAi") === "true";
 
 
   
@@ -16,6 +18,14 @@ function handleToggle(event: KeyboardEvent<HTMLInputElement>) {
     gameAI = event.target.checked; // assign the value of the checkbox to the variable
     localStorage.setItem("gameAI", gameAI.toString()); // store the variable in local storage
   }
+
+  function handleEasyAi(event: KeyboardEvent<HTMLInputElement>) {
+ easyAi = event.target.checked; // assign the value of the checkbox to the variable
+ localStorage.setItem("easyAi", easyAi.toString()); // store the variable in local storage
+}
+
+
+
 
   let showDialog = false;
   
@@ -43,7 +53,10 @@ function handleToggle(event: KeyboardEvent<HTMLInputElement>) {
   
 
 let clicked = false;
+
   let showPopup = false;
+
+  localStorage.setItem("easyAi", String(easyAi)); // store clicked in localStorage
 
   let audioFile: HTMLAudioElement = new Audio(
     "https://audio.jukehost.co.uk/oLi9mXMDDx1Jb5whJjRPMzdTogQFcS82"
@@ -217,8 +230,17 @@ dialog {
         <span class="ml-3 text-sm font-minecraft text-gray-900 dark:text-gray-800">AI 	&#40;No AI will default to 2 human players&#41;</span>
       </label>
     </button>
+
+
   </div>
-  
+  <button class="font-minecraft flex justify-center items-center mx-auto">
+    <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" value="" class="bg-center sr-only peer" bind:checked={easyAi} on:change={handleEasyAi} />
+    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+    <span class="ml-3 text-sm font-minecraft text-gray-900 dark:text-gray-800">Easy AI  &nbsp(Default is harder to beat)</span>
+    </label>
+   </button>
+   
   <p class="text-2xl text-center text-white text-opacity-60">How to Play</p>
   <p class="text-sm text-gray-900 text-center">    Start the game; AI or 2-player mode depends on the gameAI setting.
     Click on a grid cell to place your symbol.

@@ -8,19 +8,27 @@
   const empty = '';
   let size2;
   let score = 0;
+  let aiDifficulty = 'mom';
   let score2 = 0;
   let score3 = 0;
   let score4 = 0;
   const player2Symbol = 'P2';
   let clicked: boolean;
-  let gameAI: boolean; // declare a typescript variable
+  let gameAI: boolean; 
+  let easyAi: boolean; // declare a typescript variable
 
+
+    
+
+
+  
 
 
   // get the value of gameAI from local storage and parse it as a boolean
   gameAI = localStorage.getItem("gameAI") === "true";
 
   clicked = localStorage.getItem("clicked") === "true"
+  easyAi = localStorage.getItem("easyAi") === "true"
 
   clicked = !clicked;
 
@@ -133,37 +141,87 @@ let directions = [
   { dr: 1, dc: -1 } // Diagonal up-right
 ];
 
+// Min-Max search with alpha-beta pruning
 
 
+if (easyAi === true) {
+      aiDifficulty = 'Easy'
+
+    } else {
+      aiDifficulty = 'Default'
+    }
 
 // Evaluate potential threats and opportunities
-const evaluateMoveImproved = (row: number, col: number, symbol: string, opponentSymbol: string) => {
-  let score = 0;
+// Recursive function to compute the score of a move considering future moves
+const evaluateMoveImproved = (row: number, col: number, symbol: string, opponentSymbol: string, depth: number = 4) => {
+ // Base case: if depth is 0, return 0
+ if (depth === 0) return 0;
+ 
+ let score = 0;
 
-  directions.forEach(direction => {
-    let count = 0;
-    let opponentCount = 0;
-    for (let i = -4; i <= 4; i++) {
-      let newRow = row + i * direction.dr;
-      let newCol = col + i * direction.dc;
-      if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
-        let cell = $board[newRow][newCol];
-        if (cell.symbol === symbol) {
-          count++;
-        } else if (cell.symbol === opponentSymbol) {
-          opponentCount++;
-        }
-      }
-    }
-    if (count >= 4) {
-      score += count;
-    }
-    if (opponentCount >= 4) {
-      score += opponentCount * 2; // Increase score if the opponent is about to complete a line
-    }
-  });
-  
-  return score;
+ directions.forEach(direction => {
+ let count = 0;
+ let opponentCount = 0;
+ let blocked = 0;
+ let empty = 0;
+
+ for (let i = -4; i <= 4; i++) {
+ let newRow = row + i * direction.dr;
+ let newCol = col + i * direction.dc;
+ 
+ if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+ let cell = $board[newRow][newCol];
+ if (cell.symbol === symbol) {
+ count++;
+ } else if (cell.symbol === opponentSymbol) {
+ opponentCount++;
+ if (i >= -3 && i <= 3) blocked++;
+ } else if (cell.symbol === '') {
+ empty++;
+ }
+ }
+ }
+
+ // Add some bonus points for having more empty cells around the line
+ score += empty * 2;
+
+ // Add more points for having four in a row or blocking the opponent's four in a row
+ if (count >= 4) score += count * 100;
+ if (opponentCount >= 4) score += opponentCount * 200;
+
+ // Add some points for having three in a row or blocking the opponent's three in a row
+ if (count === 3 && blocked < 2) score += count * 50;
+ if (opponentCount === 3 && blocked < 2) score += opponentCount * 100;
+
+ // Add some points for having two in a row or blocking the opponent's two in a row
+ if (count === 2 && blocked === 0) score += count * 10;
+ if (opponentCount === 2 && blocked === 0) score += opponentCount * 20;
+
+ // Check if the human has two or three cells in a row with an empty cell at both ends
+ // Make sure the leftEnd and rightEnd are within bounds before accessing them
+ let leftEndRow = row - direction.dr;
+ let leftEndCol = col - direction.dc;
+ let rightEndRow = row + direction.dr;
+ let rightEndCol = col + direction.dc;
+ if (leftEndRow >= 0 && leftEndRow < size && leftEndCol >= 0 && leftEndCol < size &&
+ rightEndRow >= 0 && rightEndRow < size && rightEndCol >= 0 && rightEndCol < size) {
+ let leftEnd = $board[leftEndRow][leftEndCol];
+ let rightEnd = $board[rightEndRow][rightEndCol];
+ if (opponentCount === 2 || opponentCount === 3) {
+ if (leftEnd.symbol === '' && rightEnd.symbol === '') {
+ // Give a higher score to the move that blocks one of the ends
+ score += opponentCount * 50;
+ }
+ }
+ }
+
+ // If easyAi is true, reduce the score by half to make the AI weaker
+ if (localStorage.getItem("easyAi") === "true") {
+ score /= 2;
+ }
+ });
+
+ return score;
 };
 
 const computerMove = () => {
@@ -189,6 +247,7 @@ const computerMove = () => {
     checkForLine(computerSymbol);
   }
 };
+
 
 
 
@@ -424,7 +483,10 @@ $: {
   {/if}
 
     <p class="font-minecraft text-xl text-gray-300 mr-4">Ai = {gameAI}</p>
+
+    <p class="font-minecraft text-xl text-gray-300 mr-4">Ai Difficulty = {aiDifficulty}</p>
     <p class="font-minecraft text-xl text-gray-300 mr-4">Sound = {clicked}</p>
+    
     <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[20px]  rounded-full w-[150px] h-[50px] text-xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}> 
       Main Menu </button>
 </div>
