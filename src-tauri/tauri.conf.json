@@ -69,10 +69,10 @@
 			{
 				"decorations": true,
 				"fullscreen": false,
-				"height": 600,
+				"height": 700,
 				"resizable": true,
 				"title": "Dots and Boxes",
-				"width": 800
+				"width": 1000
 			}
 		]
 	}

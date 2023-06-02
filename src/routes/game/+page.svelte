@@ -15,6 +15,8 @@
   let clicked: boolean;
   let gameAI: boolean; // declare a typescript variable
 
+
+
   // get the value of gameAI from local storage and parse it as a boolean
   gameAI = localStorage.getItem("gameAI") === "true";
 
@@ -86,8 +88,9 @@ else {
   function resize() {
     size2 = Math.min(window.innerWidth, window.innerHeight) / 2;
      // Set the canvas width and height to match the size
-    // Draw the dots and lines on the canvas
   }
+
+  
 
 
   const createBoard = () => Array(size).fill().map((_, i) => 
@@ -229,12 +232,12 @@ const gameOver = (symbol: string) => {
       break;
     case player2Symbol:
       winner = 'Player 2';
-      score3 = score2 + 1
+      score3 = score3 + 1
 
       break;
     case computerSymbol:
       winner = 'Computer';
-      score4 = score2 + 1
+      score4 = score4 + 1
       break;
   }
   alert(`${winner} wins!`);
@@ -344,7 +347,7 @@ const gameOver = (symbol: string) => {
 
 
   <div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4');
-  background-size: cover; /* change this */
+  background-size: cover;
   position: fixed;
   top: 0;
   left: 0;

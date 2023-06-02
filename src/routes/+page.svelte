@@ -198,11 +198,11 @@ dialog {
 
 
 <center>
-    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[120px]  rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={toggleDialog} > 
-        Settings </button>
+    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[110px]  rounded-full w-[400px] h-[90px] text-4xl font-minecraft text-center active:" on:click={toggleDialog} > 
+        Settings & Info</button>
 </center>
 
-<div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop closed'}></div>
+<div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop closed'} on:click={toggleDialog}></div>
 
 
 <dialog open={showDialog}>
@@ -216,8 +216,20 @@ dialog {
       </label>
     </button>
   </p>
-  <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={toggleDialog}>Close</button>
+  <p class="text-2xl text-white text-opacity-60">How to Play</p>
+  <p class="text-sm text-gray-900">    Start the game; AI or 2-player mode depends on the gameAI setting.
+    Click on a grid cell to place your symbol.
+    Aim to get 5 of your symbols in a row horizontally, vertically, or diagonally.
+    The game ends when a player gets a line of 5. Winner gets an alert and the score updates.
+    The game resets for another round.</p>
+    <p class="text-2xl text-white text-opacity-60">Showcase</p>
+    <div style="width:90%;height:0px;position:relative;padding-bottom:54%;">
+      <iframe src="https://streamable.com/e/5axrh5?autoplay=1&muted=1" frameborder="0" width="100%" height="100%" allowfullscreen allow="autoplay;" style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe>
+    </div>
+    
+  <button class="mt-5 ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={toggleDialog}>Close</button>
 </dialog>
+
 
 
 
