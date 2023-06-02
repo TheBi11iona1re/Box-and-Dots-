@@ -138,23 +138,40 @@ dialog {
 
 
 .backdrop.open {
-  position: fixed;
   top: 0;
-  left: 0;
+  position: fixed; 
+  z-index: 0; 
+  -webkit-backdrop-filter: blur(10px) brightness(0.69);
   width: 100vw;
   height: 100vh;
-  z-index: 0; /* Ensure this appears below your dialog */
-  display: none;
-  -webkit-backdrop-filter: blur(10px) brightness(0.69);
-  display: block;
-  animation: fadeIn 0.5s;
+  animation: fadeIn .5s forwards;
   opacity: 1;
-  
+  pointer-events: auto;
 }
+
+
+.backdrop.closed {
+  top: 0;
+  position: fixed; 
+  z-index: 0; 
+  -webkit-backdrop-filter: blur(10px) brightness(0.69);
+  width: 100vw;
+  height: 100vh;
+  animation: fadeOut .5s forwards;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
 
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+@keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
 }
 
 </style>
@@ -185,7 +202,8 @@ dialog {
         Settings </button>
 </center>
 
-<div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop'}></div>
+<div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop closed'}></div>
+
 
 <dialog open={showDialog}>
   <h1 class="text-2xl text-white text-opacity-60">Settings</h1>
@@ -203,11 +221,6 @@ dialog {
 
 
 
-<button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test'), 200)}> 
-  Test</button>
-
-  <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/test2'), 200)}> 
-    Test 2 </button>
 
    
 

@@ -1,140 +1,17 @@
-<script lang="ts"> 
-  import pop from "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/+page.svelte";
-  import { goto } from '$app/navigation';
-  import { sound } from 'svelte-sound';
-  import { tweened } from 'svelte/motion';
-  import { onMount } from 'svelte';
-  let buttonSound: HTMLAudioElement;
-  let showModal = false
-  let data = '';
-  let canvas: HTMLCanvasElement;
-  let ctx: CanvasRenderingContext2D;
-  let size = 0;
-  let playerMove = true;
-  let aitwo = 'mom';
+<script lang="ts">
   import { writable } from 'svelte/store';
-  const currentPlayer = writable(1); // initialize with 1
-  import P5 from 'p5-svelte';
-  let player = $currentPlayer;
-  const gridSize = 10;
-  const gameBoard = document.getElementById("gameBoard");
+  import { goto } from '$app/navigation';
+  import "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/app.css";
+  const size = 10;
   const playerSymbol = 'P';
-  const computerSymbol = 'C';
-  
-  let dots = Array.from(
-  {length: gridSize}, 
-  () => Array.from(
-    {length: gridSize}, 
-    () => ({ connected: false, player: null, connections: [] })
-  )
-);
-
-
-
-
-  function switchPlayer() {
-  currentPlayer.update(n => n === 1 ? 2 : 1); // switch between 1 and 2
-}
-
-let state = {
-  currentPlayer: 1,
-  moves: [],
-};
-
-
-  function resize() {
-    size = Math.min(window.innerWidth, window.innerHeight) / 2;
-     // Set the canvas width and height to match the size
-     canvas.width = size;
-    canvas.height = size;
-    // Draw the dots and lines on the canvas
-    draw();
-  }
-
-  
-
-
-  function draw() { 
-  // Clear the canvas
-  ctx.clearRect(0, 0, size, size);
-
-  // Define a constant for the dot size
-  const dotSize = 10;
-  // Calculate the space between the dots based on the size and dot size
-  const space = (size - dotSize * gridSize) / (gridSize + 1);
-
-  // Use a dark gray color for the dots and lines
-  ctx.fillStyle = '#c7c7c7';
-  ctx.strokeStyle = '#c7c7c7';
-
-  // Use a nested loop to draw the dots and lines
-  for (let i = 0; i < gridSize; i++) {
-    for (let j = 0; j < gridSize; j++) {
-      // Calculate the x and y coordinates of the dot
-      let x = space + (dotSize + space) * i + dotSize / 2;
-      let y = space + (dotSize + space) * j + dotSize / 2;
-
-      // Draw the dot
-      ctx.beginPath();
-      ctx.arc(x, y, dotSize / 2, 0, Math.PI * 2, true);
-      ctx.fill();
-
-      // Draw the lines for connected dots
-      if (dots[i][j].connected) {
-        dots[i][j].connections.forEach((connection) => {
-          let x2 = space + (dotSize + space) * connection.x + dotSize / 2;
-          let y2 = space + (dotSize + space) * connection.y + dotSize / 2;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x2, y2);
-          ctx.stroke();
-        });
-      }
-
-
-
-      
-    }
-  }
-}
-
-
-
-
-
-
-
-  onMount(() => {
-    // Get the canvas context
-    ctx = canvas.getContext('2d');
-    // Call the resize function when the page is loaded
-    resize();
-    // Add an event listener for window resize
-    window.addEventListener('resize', resize);
-  });
-
-  // Define a constant for the number of rows and columns
-  const N = 5;
-  // Create an array of numbers from 0 to N-1
-  const range = Array.from({ length: N }, (_, i) => i);
-  
-  // Check if the page has been reloaded or not
-  var reloaded = localStorage.getItem("reloaded");
-
-  // If not, set the reloaded flag to true and reload the page
-  if (!reloaded) {
-    localStorage.setItem("reloaded", true);
-    location.reload(true);
-  }
-
-  // If yes, clear the reloaded flag and proceed normally
-  else {
-    localStorage.removeItem("reloaded");
-    // Your normal code here
-  }
-
-
-
+  const computerSymbol = 'Ai';
+  const empty = '';
+  let size2;
+  let score = 0;
+  let score2 = 0;
+  let score3 = 0;
+  let score4 = 0;
+  const player2Symbol = 'P2';
   let clicked: boolean;
   let gameAI: boolean; // declare a typescript variable
 
@@ -142,8 +19,6 @@ let state = {
   gameAI = localStorage.getItem("gameAI") === "true";
 
   clicked = localStorage.getItem("clicked") === "true"
-
-
 
   clicked = !clicked;
 
@@ -161,11 +36,21 @@ let state = {
 
 
 
-    let score = 0; // declare a variable for the score
-let scoreSound: HTMLAudioElement; // declare a variable for the sound effect
+  var reloaded = localStorage.getItem("reloaded");
 
+// If not, set the reloaded flag to true and reload the page
+if (!reloaded) {
+  localStorage.setItem("reloaded", true);
+  location.reload(true);
+}
 
-let container: HTMLElement;
+// If yes, clear the reloaded flag and proceed normally
+else {
+  localStorage.removeItem("reloaded");
+  // Your normal code here
+}
+
+  let container: HTMLElement;
   // Declare a variable to store the current event listener
   let listener: (event: MouseEvent) => void;
   // Declare a reactive function for mouse movement
@@ -191,102 +76,305 @@ let container: HTMLElement;
     }
   }
 
-if (gameAI === true) {
-  aitwo = "AI"
 
-} else {
-  aitwo = "2"
-}
+
+  interface Cell {
+    id: string;
+    symbol: string;
+  }
+
+  function resize() {
+    size2 = Math.min(window.innerWidth, window.innerHeight) / 2;
+     // Set the canvas width and height to match the size
+    // Draw the dots and lines on the canvas
+  }
+
+
+  const createBoard = () => Array(size).fill().map((_, i) => 
+    Array(size).fill().map((_, j) => ({
+      id: `cell-${i}-${j}`,
+      symbol: empty
+    }))
+  );
+
+  const board = writable(createBoard());
+
+  // helper function to copy board
+  const copyBoard = (b: Cell[][]) => b.map(row => [...row]);
+  let currentPlayer = playerSymbol; // starts with player's turn
+
+  const playerMove = (i: number, j: number) => {
+  const copiedBoard = copyBoard($board);
+  // check if the cell is empty before proceeding
+  if (copiedBoard[i][j].symbol === empty) {
+    copiedBoard[i][j].symbol = currentPlayer;
+    board.set(copiedBoard);
+    if (!checkForLine(currentPlayer)) {
+      if (gameAI) {
+        computerMove();
+      } else {
+        // switch between players
+        currentPlayer = currentPlayer === playerSymbol ? player2Symbol : playerSymbol;
+      }
+    }
+  } else {
+
+  }
+};
+
+
+let directions = [
+  { dr: 1, dc: 0 },
+  { dr: 0, dc: 1 },
+  { dr: 1, dc: 1 },
+  { dr: 1, dc: -1 } // Diagonal up-right
+];
+
+
+
+
+// Evaluate potential threats and opportunities
+const evaluateMoveImproved = (row: number, col: number, symbol: string, opponentSymbol: string) => {
+  let score = 0;
+
+  directions.forEach(direction => {
+    let count = 0;
+    let opponentCount = 0;
+    for (let i = -4; i <= 4; i++) {
+      let newRow = row + i * direction.dr;
+      let newCol = col + i * direction.dc;
+      if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+        let cell = $board[newRow][newCol];
+        if (cell.symbol === symbol) {
+          count++;
+        } else if (cell.symbol === opponentSymbol) {
+          opponentCount++;
+        }
+      }
+    }
+    if (count >= 4) {
+      score += count;
+    }
+    if (opponentCount >= 4) {
+      score += opponentCount * 2; // Increase score if the opponent is about to complete a line
+    }
+  });
+  
+  return score;
+};
+
+const computerMove = () => {
+  let bestMove = null;
+  let highestScore = -Infinity;
+
+  $board.forEach((row, i) => {
+    row.forEach((cell, j) => {
+      if (cell.symbol === '') {
+        let score = evaluateMoveImproved(i, j, computerSymbol, playerSymbol);
+        if (score > highestScore) {
+          highestScore = score;
+          bestMove = { i, j };
+        }
+      }
+    });
+  });
+
+  if (bestMove) {
+    const copiedBoard = copyBoard($board);
+    copiedBoard[bestMove.i][bestMove.j].symbol = computerSymbol;
+    board.set(copiedBoard);
+    checkForLine(computerSymbol);
+  }
+};
+
+
+
+
+let checkForLine = (symbol: string): boolean => {
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            // Check row
+            if (j <= size - 5 && [...Array(5).keys()].every(k => $board[i][j+k].symbol === symbol)) {
+                gameOver(symbol);
+                return true;
+            }
+            // Check column
+            if (i <= size - 5 && [...Array(5).keys()].every(k => $board[i+k][j].symbol === symbol)) {
+                gameOver(symbol);
+                return true;
+            }
+            // Check diagonal (top-left to bottom-right)
+            if (i <= size - 5 && j <= size - 5 && [...Array(5).keys()].every(k => $board[i+k][j+k].symbol === symbol)) {
+                gameOver(symbol);
+                return true;
+            }
+            // Check diagonal (bottom-left to top-right)
+            if (i >= 4 && j <= size - 5 && [...Array(5).keys()].every(k => $board[i-k][j+k].symbol === symbol)) {
+                gameOver(symbol);
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+
+
+const gameOver = (symbol: string) => {
+  let winner;
+  switch(symbol) {
+    case playerSymbol:
+      winner = 'Player 1';
+      score2 = score2 + 1
+      break;
+    case player2Symbol:
+      winner = 'Player 2';
+      score3 = score2 + 1
+
+      break;
+    case computerSymbol:
+      winner = 'Computer';
+      score4 = score2 + 1
+      break;
+  }
+  alert(`${winner} wins!`);
+  // reloading the game by creating a new game board
+  board.set(createBoard());
+  currentPlayer = playerSymbol; // reset to player's turn
+};
+
+
+
+
 
 </script>
 
-
 <style>
-  body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
+
+
+.mycontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    margin: 0;    /* Add this line to remove any default margins */
+    padding: 0;   /* Add this line to remove any default padding */
+    box-sizing: border-box; /* Add this line to include padding and border in the element's total width and height */
   }
-  .square {
-      background: rgba(98, 98, 98, 0.15);
+
+  .cell.P2 {
+  background-color: rgba(0, 255, 0, 0.5); /* Choose appropriate color */
+}
+
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 1px;
+    width: 80vmin;
+    height: 80vmin;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  background: rgba(98, 98, 98, 0.15);
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       backdrop-filter: blur(13px);
-      -webkit-backdrop-filter: blur(13px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1.25px solid rgba(255, 255, 255, 0.18);
       transition: width 0.4s, height 0.4s;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
   }
+  .cell {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .cell.P {
+    background-color: rgba(64, 64, 237, 0.5); /* 70% opacity */
+  }
+  .cell.Ai {
+    background-color: rgba(237, 64, 64, 0.5); /* 70% opacity */
+  }
+
+  @font-face {
+  font-family: "Minecraft";
+  src: url("/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/test2/VCR_OSD_MONO_1.001.ttf");
+}
+
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-right: 30px; /* Adjust the margin-left value as needed */
+  border: 1.25px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+
 
 </style>
 
 
 
-<div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4'); background-size: 125%; position: fixed; top: 0; left: 0; bottom: 0; right: 0;"></div>
 
-  <audio
-  src="https://audio.jukehost.co.uk/1Do1qes84j02HAhuxaMy1WI8SJpd0jMX" 
-  preload="auto" 
-  bind:this={buttonSound} 
-  ></audio>
+<div class="content-container">
+
+
+  <div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4');
+  background-size: cover; /* change this */
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;"
+  class="mycontainer">
   
-  <div style="">
-    <button class="fixed bottom-[25px] left-1/2 transform -translate-x-1/2 
-    ripple-bg-gray-600 g-clip-text bg-gradient-to-r
-     from-gray-600 to-gray-800 hover:bg-blue-800
-      hover:bg-gray-800 text-white font-bold py-2
-       px-4 mt-[10px] rounded-full w-[250px] h-[100px] text-4xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}> 
-    Main Menu </button>
-    </div>
-
-  <div>
-  <button class="   fixed top-[20px]  left-1/2 transform -translate-x-1/2 ripple-bg-green-700 g-clip-text bg-gradient-to-r
-  from-green-700 to-green-900 hover:bg-green-800
-   hover:bg-green-800 text-white font-bold py-2
-    px-4 mt-[10px] rounded-full w-[150px] h-[50px] text-2xl font-minecraft text-center active:" on:click={() => {
-  if (clicked) { // check if clicked is true
-  buttonSound.volume = 0.4; // set the volume to 0.4
-  buttonSound.play(); // play the sound effect
-  }
-  }}>sound</button>
-  
-  <div class="h-screen flex items-center justify-center">
-<!-- Use flexbox to center the square -->
-
-
-
-
-
-<div class="square rounded-lg" style="width: {size}px; height: {size}px;">
-  <!-- Use a canvas element to draw the dots and lines -->
-  <canvas bind:this={canvas} />
-</div>
-    
-
-
-</div>
-  <p class="fixed top-[20px] fixed left-[125px] font-minecraft text-red-600 text-2xl"> Player 1</p>
-  <p class="fixed top-[20px] fixed left-[125px] font-minecraft text-red-600 text-2xl blur-sm"> Player 1</p>
-  <p class="fixed top-[20px] fixed left-[125px] font-minecraft text-red-600 text-2xl blur-2xl"> Player 1</p>
-  <p class="fixed top-[50px] fixed left-[130px] font-minecraft text-red-600 text-lg"> Score = 0</p>
-  <p class="fixed top-[50px] fixed left-[130px] font-minecraft text-red-600 text-lg blur-sm"> Score = 0</p>
-  <p class="fixed top-[50px] fixed left-[130px] font-minecraft text-red-600 text-lg blur-lg"> Score = 0</p>
-  <p class="fixed bottom-[60px] fixed left-[125px] font-minecraft text-gray-300 text-2xl"> Ai = {gameAI}</p>
-  <p class="fixed bottom-[60px] fixed right-[80px] font-minecraft text-gray-300 text-2xl"> Sound = {clicked}</p>
-  <p class="fixed top-[20px] fixed right-[100px] font-minecraft text-blue-600 text-2xl"> Player {aitwo}</p>
-  <p class="fixed top-[20px] fixed right-[100px] font-minecraft text-blue-600 text-2xl blur-sm"> Player {aitwo}</p>
-  <p class="fixed top-[20px] fixed right-[100px] font-minecraft text-blue-600 text-2xl blur-2xl"> Player {aitwo}</p>
-  <p class="fixed top-[50px] fixed right-[110px] font-minecraft text-blue-600 text-lg"> Score = 0</p>
-  <p class="fixed top-[50px] fixed right-[110px] font-minecraft text-blue-600 text-lg blur-sm"> Score = 0</p>
-  <p class="fixed top-[50px] fixed right-[110px] font-minecraft text-blue-600 text-lg blur-lg"> Score = 0</p>
-  
-  <p class="font-minecraft text-gray-300 fixed bottom-2 left-2 text-sm">©The_Bi11iona1re</p>
-  
+  <div class="score-container">
+    <img class="ml-[0px]" src="https://cdn.discordapp.com/attachments/914440092607741952/1104385925909336174/billionaire_dots_and_boxes_game_logo_pixel_art_5ac3e59f-dec3-4bb9-ab92-44e318bcd4fd.png" alt="Lamp" width="100" height="100">
+    <p class="font-minecraft text-transparent bg-clip-text bg-gradient-to-r from-blue-300  to-blue-500  text-3xl mr-4">Dots and Boxes</p> 
+    <p class="font-minecraft text-xl text-blue-600 mr-4">Player 1 Score = {score2}</p> 
+    <p class="font-minecraft text-xl text-green-500 mr-4">Player 2 Score = {score3}</p>
+    <p class="font-minecraft text-xl text-red-500 mr-4">Computer Score = {score4}</p>
+    <p class="font-minecraft text-xl text-gray-300 mr-4">Ai = {gameAI}</p>
+    <p class="font-minecraft text-xl text-gray-300 mr-4">Sound = {clicked}</p>
+    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[20px]  rounded-full w-[150px] h-[50px] text-xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}> 
+      Main Menu </button>
   </div>
- 
+  
+
+  <div class="board font-minecraft">
+    {#each $board as row, i}
+      {#each row as cell, j}
+        <div class={`cell ${cell.symbol}`} on:click={() => playerMove(i, j)}>
+          {cell.symbol}
+        </div>
+      {/each}
+    {/each}
+  </div>
+</div>
+
+</div>
+
