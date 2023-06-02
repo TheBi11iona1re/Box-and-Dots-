@@ -240,13 +240,24 @@ const gameOver = (symbol: string) => {
       score4 = score4 + 1
       break;
   }
-  alert(`${winner} wins!`);
+  setTimeout(() => { console.log("World!"); }, 5000);alert(`${winner} wins!`);
   // reloading the game by creating a new game board
-  board.set(createBoard());
+  setTimeout(() => { board.set(createBoard());}, 600);
+  
   currentPlayer = playerSymbol; // reset to player's turn
 };
 
 
+let currentPlayerClass: string;
+$: {
+  currentPlayerClass = (currentPlayer === playerSymbol) 
+  ? 'player1-active'
+  : (currentPlayer === player2Symbol) 
+  ? 'player2-active'
+  : (currentPlayer === computerSymbol)
+  ? 'computer-active' 
+  : '';
+}
 
 
 
@@ -335,7 +346,52 @@ const gameOver = (symbol: string) => {
   border: 1.25px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
+.glow.player1-active {
+  animation: glow-player1 100s ease-in-out infinite;
+}
 
+.glow.player2-active {
+  animation: glow-player2 100s ease-in-out infinite;
+}
+
+.glow.computer-active {
+  animation: glow-computer 100s ease-in-out infinite;
+}
+.glow.player1-active {
+  animation: glow-player1 100s ease-in-out infinite;
+}
+
+@keyframes glow-player1 {
+  0% {
+    text-shadow: 0 0 2px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.8), 0 0 26px rgba(59, 130, 246, 0.8), 0 0 28px rgba(59, 130, 246, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 4px rgba(59, 130, 246, 0.8), 0 0 28px rgba(59, 130, 246, 0.8), 0 0 12px rgba(59, 130, 246, 0.8), 0 0 16px rgba(59, 130, 246, 0.8);
+  }
+}
+
+
+
+
+
+@keyframes glow-player2 {
+  0% {
+    text-shadow: 0 0 2px #0c0, 0 0 20px #0c0, 0 0 26px #0c0, 0 0 28px #0c0;
+  }
+  100% {
+    text-shadow: 0 0 4px #0c0, 0 0 28px #0c0, 0 0 12px #0c0, 0 0 16px #0c0;
+  }
+}
+
+
+@keyframes glow-computer {
+  0% {
+    text-shadow: 0 0 2px #f00, 0 0 4px #f00, 0 0 6px #f00, 0 0 8px #f00;
+  }
+  100% {
+    text-shadow: 0 0 4px #f00, 0 0 8px #f00, 0 0 12px #f00, 0 0 16px #f00;
+  }
+}
 
 
 </style>
@@ -358,14 +414,21 @@ const gameOver = (symbol: string) => {
   <div class="score-container">
     <img class="ml-[0px]" src="https://cdn.discordapp.com/attachments/914440092607741952/1104385925909336174/billionaire_dots_and_boxes_game_logo_pixel_art_5ac3e59f-dec3-4bb9-ab92-44e318bcd4fd.png" alt="Lamp" width="100" height="100">
     <p class="font-minecraft text-transparent bg-clip-text bg-gradient-to-r from-blue-300  to-blue-500  text-3xl mr-4">Dots and Boxes</p> 
-    <p class="font-minecraft text-xl text-blue-600 mr-4">Player 1 Score = {score2}</p> 
-    <p class="font-minecraft text-xl text-green-500 mr-4">Player 2 Score = {score3}</p>
-    <p class="font-minecraft text-xl text-red-500 mr-4">Computer Score = {score4}</p>
+
+    {#if !gameAI}
+    <p class={`font-minecraft text-xl text-blue-600 mr-4 ${currentPlayerClass === 'player1-active' ? 'glow player1-active' : ''}`}>Player 1 Score = {score2}</p>
+    <p class={`font-minecraft text-xl text-green-500 mr-4 ${currentPlayerClass === 'player2-active' ? 'glow player2-active' : ''}`}>Player 2 Score = {score3}</p>
+  {:else}
+    <p class={`font-minecraft text-xl text-blue-600 mr-4 `}>Player 1 Score = {score2}</p>
+    <p class={`font-minecraft text-xl text-red-500 mr-4 ${currentPlayerClass === 'computer-active' ? 'glow computer-active' : ''}`}>Computer Score = {score4}</p>
+  {/if}
+
     <p class="font-minecraft text-xl text-gray-300 mr-4">Ai = {gameAI}</p>
     <p class="font-minecraft text-xl text-gray-300 mr-4">Sound = {clicked}</p>
     <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[20px]  rounded-full w-[150px] h-[50px] text-xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}> 
       Main Menu </button>
-  </div>
+</div>
+
   
 
   <div class="board font-minecraft">
