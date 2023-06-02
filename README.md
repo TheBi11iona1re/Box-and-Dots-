@@ -7,4 +7,4 @@ use `npm run tauri dev` to run and `npm run tauri build` to build application or
 Start the game; AI or 2-player mode depends on the gameAI setting. Click on a grid cell to place your symbol. Aim to get 5 of your symbols in a row horizontally, vertically, or diagonally. The game ends when a player gets a line of 5. Winner gets an alert and the score updates. The game resets for another round.
 
 # Showcase 
-https://streamable.com/5axrh5
+<div style="width: 100%; height: 0px; position: relative; padding-bottom: 62.500%;"><iframe src="https://streamable.com/e/5axrh5" frameborder="0" width="100%" height="100%" allowfullscreen style="width: 100%; height: 100%; position: absolute;"></iframe></div>
