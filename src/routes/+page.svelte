@@ -208,28 +208,30 @@ dialog {
 
 
 <dialog open={showDialog}>
-  <h1 class="text-2xl text-white text-opacity-60">Settings</h1>
-  <p>
+  <h1 class="text-4xl text-white text-opacity-60 text-center">Settings & Info</h1>
+  <div class="flex justify-center items-center">
     <button class="font-minecraft">
       <label class="relative inline-flex items-center cursor-pointer">
-        <input type="checkbox" value="" class="sr-only peer" bind:checked={gameAI} on:change={handleToggle} />
-        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-        <span class="ml-3 text-sm font-minecraft text-gray-900 dark:text-gray-800">AI</span>
+        <input type="checkbox" value="" class="bg-center sr-only peer" bind:checked={gameAI} on:change={handleToggle} />
+        <div class="w-11  h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        <span class="ml-3 text-sm font-minecraft text-gray-900 dark:text-gray-800">AI 	&#40;No AI will default to 2 human players&#41;</span>
       </label>
     </button>
-  </p>
-  <p class="text-2xl text-white text-opacity-60">How to Play</p>
-  <p class="text-sm text-gray-900">    Start the game; AI or 2-player mode depends on the gameAI setting.
+  </div>
+  
+  <p class="text-2xl text-center text-white text-opacity-60">How to Play</p>
+  <p class="text-sm text-gray-900 text-center">    Start the game; AI or 2-player mode depends on the gameAI setting.
     Click on a grid cell to place your symbol.
     Aim to get 5 of your symbols in a row horizontally, vertically, or diagonally.
     The game ends when a player gets a line of 5. Winner gets an alert and the score updates.
     The game resets for another round.</p>
-    <p class="text-2xl text-white text-opacity-60">Showcase</p>
-    <div style="width:90%;height:0px;position:relative;padding-bottom:54%;">
+    <p class="text-2xl text-white text-center text-opacity-60">Showcase</p>
+    <div style="bg-center width:90%;height:0px;position:relative;padding-bottom:54%;">
       <iframe title="showcase" src="https://streamable.com/e/5axrh5?autoplay=1&muted=1" frameborder="0" width="100%" height="100%" allowfullscreen allow="autoplay;" style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe>
     </div>
-    
-  <button class="mt-[15px] ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={toggleDialog}>Close</button>
+  
+    <div class="flex justify-center items-center">
+  <button class="mt-[15px]  ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[0px]  rounded-full w-[100px] h-[40px] text-sm font-minecraft text-center active:" on:click={toggleDialog}>Close</button>
 </dialog>
 
 
