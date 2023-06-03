@@ -303,8 +303,10 @@ const gameOver = (symbol: string) => {
   // reloading the game by creating a new game board
   setTimeout(() => { board.set(createBoard());}, 600);
   
+  
   currentPlayer = playerSymbol; // reset to player's turn
 };
+
 
 
 let currentPlayerClass: string;
@@ -363,7 +365,7 @@ $: {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: background-color 0.3s;
     backdrop-filter: blur(4px);
