@@ -251,7 +251,37 @@ const computerMove = () => {
 
 
 
+const isBoardFull = () => {
+    return $board.every(row => row.every(cell => cell.symbol !== empty));
+}
 
+const gameOver = (symbol: string) => {
+  if(symbol !== empty) {
+    let winner;
+    switch(symbol) {
+      case playerSymbol:
+        winner = 'Player 1';
+        score2 = score2 + 1;
+        break;
+      case player2Symbol:
+        winner = 'Player 2';
+        score3 = score3 + 1;
+        break;
+      case computerSymbol:
+        winner = 'Computer';
+        score4 = score4 + 1;
+        break;
+    }
+    alert(`${winner} wins!`);
+  } else if (isBoardFull()) {
+    alert('Game Over! It\'s a tie!');
+  }
+
+  setTimeout(() => { board.set(createBoard()); }, 600);
+  currentPlayer = playerSymbol; // reset to player's turn
+};
+
+// Modify your checkForLine function to call gameOver with empty symbol if no player has won and board is full.
 let checkForLine = (symbol: string): boolean => {
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
@@ -277,35 +307,12 @@ let checkForLine = (symbol: string): boolean => {
             }
         }
     }
+    if(isBoardFull()){
+        gameOver(empty);
+    }
     return false;
 };
 
-
-
-const gameOver = (symbol: string) => {
-  let winner;
-  switch(symbol) {
-    case playerSymbol:
-      winner = 'Player 1';
-      score2 = score2 + 1
-      break;
-    case player2Symbol:
-      winner = 'Player 2';
-      score3 = score3 + 1
-
-      break;
-    case computerSymbol:
-      winner = 'Computer';
-      score4 = score4 + 1
-      break;
-  }
-  setTimeout(() => { console.log("World!"); }, 5000);alert(`${winner} wins!`);
-  // reloading the game by creating a new game board
-  setTimeout(() => { board.set(createBoard());}, 600);
-  
-  
-  currentPlayer = playerSymbol; // reset to player's turn
-};
 
 
 
