@@ -3,11 +3,17 @@ import { goto } from '$app/navigation';
 import { sound } from 'svelte-sound';
 import { onMount } from 'svelte';
 import { appWindow } from '@tauri-apps/api/window'
-import { invoke } from '@tauri-apps/api/tauri'
 import "../app.css";
 import { message } from '@tauri-apps/api/dialog';
 let gameAI = true
 let easyAi = true;
+
+
+import { invoke } from '@tauri-apps/api/tauri'
+
+invoke('my_custom_command', { state_message: 'My State Message' })
+
+
 
 gameAI = localStorage.getItem("gameAI") === "true";
 easyAi = localStorage.getItem("easyAi") === "true";
@@ -259,10 +265,6 @@ dialog {
 
 
 
-
-   
-
-
 <button
   class="text-blue-600 hover:text-blue-900 font-minecraft font-bold text-center fixed bottom-2 right-2 "
   on:click={mute}
@@ -277,4 +279,5 @@ dialog {
 
 <p class="font-minecraft text-gray-300 fixed bottom-2 left-2">©The_Bi11iona1re</p>
 </div>
+
 
