@@ -12,6 +12,27 @@ fn main() {
     .expect("failed to run app");
 }
 
+#[tauri::command]
+fn write_log(msg: String) -> Result<(), String> {
+  use std::fs::OpenOptions;
+  use std::io::prelude::*;
+  use std::path::PathBuf;
+  use dirs::home_dir;
+
+  let mut path = PathBuf::new();
+  path.push(home_dir().ok_or("Cannot find home directory")?);
+  path.push("logs.txt");
+
+  let mut file = OpenOptions::new()
+    .write(true)
+    .append(true)
+    .create(true)
+    .open(path)
+    .map_err(|e| e.to_string())?;
+
+  writeln!(file, "{}", msg).map_err(|e| e.to_string())
+}
+
 
 
 
