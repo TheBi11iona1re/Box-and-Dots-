@@ -2,6 +2,7 @@
   import { writable } from 'svelte/store';
   import { goto } from '$app/navigation';
   import "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/app.css";
+  import { useChat } from "ai/svelte";
   const size = 10;
   const playerSymbol = 'P';
   const computerSymbol = 'Ai';
@@ -20,6 +21,10 @@
 
     
 
+
+  const { messages, handleSubmit, input } = useChat({
+    api: "/test",
+    }); 
 
   
 
@@ -120,6 +125,7 @@ else {
   if (copiedBoard[i][j].symbol === empty) {
     copiedBoard[i][j].symbol = currentPlayer;
     board.set(copiedBoard);
+    printBoard(copiedBoard);
     if (!checkForLine(currentPlayer)) {
       if (gameAI) {
         computerMove();
@@ -244,6 +250,7 @@ const computerMove = () => {
     const copiedBoard = copyBoard($board);
     copiedBoard[bestMove.i][bestMove.j].symbol = computerSymbol;
     board.set(copiedBoard);
+    printBoard(copiedBoard);
     checkForLine(computerSymbol);
   }
 };
@@ -255,31 +262,7 @@ const isBoardFull = () => {
     return $board.every(row => row.every(cell => cell.symbol !== empty));
 }
 
-const gameOver = (symbol: string) => {
-  if(symbol !== empty) {
-    let winner;
-    switch(symbol) {
-      case playerSymbol:
-        winner = 'Player 1';
-        score2 = score2 + 1;
-        break;
-      case player2Symbol:
-        winner = 'Player 2';
-        score3 = score3 + 1;
-        break;
-      case computerSymbol:
-        winner = 'Computer';
-        score4 = score4 + 1;
-        break;
-    }
-    alert(`${winner} wins!`);
-  } else if (isBoardFull()) {
-    alert('Game Over! It\'s a tie!');
-  }
 
-  setTimeout(() => { board.set(createBoard()); }, 600);
-  currentPlayer = playerSymbol; // reset to player's turn
-};
 
 // Modify your checkForLine function to call gameOver with empty symbol if no player has won and board is full.
 let checkForLine = (symbol: string): boolean => {
@@ -327,6 +310,63 @@ $: {
   : '';
 }
 
+let gameWinner: string | null = null; // Add this line at the top of your file
+
+const gameOver = (symbol: string) => {
+  if(symbol !== empty) {
+    switch(symbol) {
+      case playerSymbol:
+        gameWinner = 'Player 1';
+        console.log("Human Wins")
+        score2 = score2 + 1;
+        break;
+      case player2Symbol:
+        gameWinner = 'Player 2';
+        console.log("Player2 Wins")
+        score3 = score3 + 1;
+        break;
+      case computerSymbol:
+        gameWinner = 'Computer';
+        console.log("Computer Wins")
+        score4 = score4 + 1;
+        break;
+    }
+    alert(`${gameWinner} wins!`);
+  } else if (isBoardFull()) {
+    gameWinner = 'Tie';
+    alert('Game Over! It\'s a tie!');
+  }
+
+  setTimeout(() => { 
+    board.set(createBoard()); 
+    gameWinner = null; // Reset winner
+  }, 600);
+  currentPlayer = playerSymbol; // reset to player's turn
+};
+
+const printBoard = (b: Cell[][]) => {
+  const charArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  let boardState = '';
+  for(let i = 0; i < b.length; i++) {
+    for(let j = 0; j < b[i].length; j++) {
+      const symbol = b[i][j].symbol;
+      if(symbol !== empty) {
+        boardState += `${charArray[j]}${i+1}-${symbol}, `;
+      }
+    }
+  }
+  localStorage.setItem('boardState', boardState);
+  if(gameWinner) {
+    boardState += `Winner: ${gameWinner}`;
+  }
+  console.log(boardState);
+};
+
+
+
+
+board.subscribe(b => printBoard(b));
+
 
 
 </script>
@@ -360,6 +400,7 @@ $: {
     height: 80vmin;
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    
   background: rgba(98, 98, 98, 0.15);
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       backdrop-filter: blur(13px);
@@ -500,7 +541,7 @@ $: {
       Main Menu </button>
 </div>
 
-  
+
 
   <div class="board font-minecraft">
     {#each $board as row, i}
