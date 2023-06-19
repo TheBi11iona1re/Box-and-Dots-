@@ -18,6 +18,5 @@ fn main() {
 
 #[tauri::command]
 fn my_custom_command() {
-  let x = 3;
   println!("Main Menu!");
 }

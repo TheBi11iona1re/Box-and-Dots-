@@ -225,6 +225,8 @@ dialog {
 
 <div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop closed'} on:click={toggleDialog}></div>
 
+<button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[110px]  rounded-full w-[100px] h-[60px] text-sm font-minecraft text-center active:" on:click={() => goto('/test')} > 
+  Box and Dots AI</button>
 
 <dialog open={showDialog}>
   <h1 class="text-4xl mb-3 text-white text-opacity-60 text-center">Settings & Info</h1>

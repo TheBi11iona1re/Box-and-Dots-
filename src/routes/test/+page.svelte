@@ -1,273 +1,36 @@
+<script>
+      import "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/app.css";
+      import { useChat } from "ai/svelte";
 
-<body>
-    <table id="gameBoard"></table>
-    
-    <script lang="ts">
+    const { messages, handleSubmit, input } = useChat({
+    api: "/test",
+    }); 
+</script>
 
-var gridSize = 10;
-var gameBoard = document.getElementById("gameBoard");
-var playerSymbol = 'P';
-var computerSymbol = 'Ai';
-for (var i = 0; i < gridSize; i++) {
-    var row = document.createElement("tr");
-    for (var j = 0; j < gridSize; j++) {
-        var cell = document.createElement("td");
-        cell.id = "cell-".concat(i, "-").concat(j);
-        cell.addEventListener('click', playerMove);
-        row.appendChild(cell);
-    }
-    gameBoard.appendChild(row);
-}
-function playerMove(event) {
-    var cell = event.target;
-    if (cell.textContent === '') {
-        cell.textContent = playerSymbol;
-        cell.classList.add("player"); // Add player class
-        cell.removeEventListener('click', playerMove);
-        if (!checkForLine(playerSymbol)) {
-            computerMove();
-        }
-    }
-}
-function computerMove() {
-    var emptyCells = [];
-    var bestMove = null;
-    var highestScore = -Infinity;
-    for (var i = 0; i < gridSize; i++) {
-        for (var j = 0; j < gridSize; j++) {
-            var cell = document.getElementById("cell-".concat(i, "-").concat(j));
-            if (cell.textContent === '') {
-                emptyCells.push(cell);
-                // Calculate the score for this move
-                var score = evaluateMove(i, j, computerSymbol) + evaluateMove(i, j, playerSymbol);
-                // Update the best move if the score is higher than the current highest score
-                if (score > highestScore) {
-                    highestScore = score;
-                    bestMove = cell;
-                }
-            }
-        }
-    }
-    if (bestMove) {
-        bestMove.textContent = computerSymbol;
-        bestMove.classList.add("computer"); // Add computer class
-        bestMove.removeEventListener('click', playerMove);
-        checkForLine(computerSymbol);
-    }
-}
-function evaluateMove(row, col, symbol) {
-    var directions = [
-        { dr: 1, dc: 0 },
-        { dr: 0, dc: 1 },
-        { dr: 1, dc: 1 },
-        { dr: 1, dc: -1 } // Diagonal up-right
-    ];
-    var score = 0;
-    for (var _i = 0, directions_1 = directions; _i < directions_1.length; _i++) {
-        var direction = directions_1[_i];
-        var count = 0;
-        var blocked = 0;
-        for (var i = -4; i <= 4; i++) {
-            var newRow = row + i * direction.dr;
-            var newCol = col + i * direction.dc;
-            if (newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize) {
-                var cell = document.getElementById("cell-".concat(newRow, "-").concat(newCol));
-                if (cell.textContent === symbol) {
-                    count++;
-                }
-                else if (cell.textContent !== '') {
-                    blocked++;
-                }
-            }
-            else {
-                blocked++;
-            }
-        }
-        if (count >= 4 && blocked < 2) {
-            score += count;
-        }
-    }
-    return score;
-}
-function checkForLine(symbol) {
-    // Check rows
-    for (var i = 0; i < gridSize; i++) {
-        var count = 0;
-        for (var j = 0; j < gridSize; j++) {
-            var cell = document.getElementById("cell-".concat(i, "-").concat(j));
-            if (cell.textContent === symbol) {
-                count++;
-            }
-            else {
-                count = 0;
-            }
-            if (count === 5) {
-                gameOver(symbol);
-                return true;
-            }
-        }
-    }
-    // Check columns
-    for (var j = 0; j < gridSize; j++) {
-        var count = 0;
-        for (var i = 0; i < gridSize; i++) {
-            var cell = document.getElementById("cell-".concat(i, "-").concat(j));
-            if (cell.textContent === symbol) {
-                count++;
-            }
-            else {
-                count = 0;
-            }
-            if (count === 5) {
-                gameOver(symbol);
-                return true;
-            }
-        }
-    }
-    // Check diagonals
-    for (var i = 0; i < gridSize - 4; i++) {
-        for (var j = 0; j < gridSize - 4; j++) {
-            var count = 0;
-            for (var k = 0; k < 5; k++) {
-                var cell = document.getElementById("cell-".concat(i + k, "-").concat(j + k));
-                if (cell.textContent === symbol) {
-                    count++;
-                }
-                else {
-                    break;
-                }
-            }
-            if (count === 5) {
-                gameOver(symbol);
-                return true;
-            }
-        }
-    }
-    for (var i = 0; i < gridSize - 4; i++) {
-        for (var j = 4; j < gridSize; j++) {
-            var count = 0;
-            for (var k = 0; k < 5; k++) {
-                var cell = document.getElementById("cell-".concat(i + k, "-").concat(j - k));
-                if (cell.textContent === symbol) {
-                    count++;
-                }
-                else {
-                    break;
-                }
-            }
-            if (count === 5) {
-                gameOver(symbol);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-function gameOver(symbol) {
-    for (var i = 0; i < gridSize; i++) {
-        for (var j = 0; j < gridSize; j++) {
-            var cell = document.getElementById("cell-".concat(i, "-").concat(j));
-            cell.removeEventListener('click', playerMove);
-            
-        }
-    }
-    var reloaded = localStorage.getItem("reloaded");
-    alert("".concat(symbol === playerSymbol ? 'Player' : 'Computer', " wins!"));
-    // If not, set the reloaded flag to true and reload the page
-    if (!reloaded) {
-        localStorage.setItem("reloaded", true);
-        location.reload(true);
-        localStorage.removeItem("reloaded");
-    }
-    // If yes, clear the reloaded flag and proceed normally
-    else {
-        localStorage.removeItem("reloaded");
-        // Your normal code here
-    }
-}
-
-       
-    </script>
-</body>
-    
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Longest Line Game</title>
-
-    <style>
-          .board {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    gap: 0px;
-    width: 300px;
-    height: 300px;
+<style>
+  @font-face {
+    font-family: "Minecraft";
+    src: url("/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/test/VCR_OSD_MONO_1.001.ttf");
   }
-  .cell {
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
+
+  .assistant-message {
+    margin-bottom: 20px;
   }
-  .cell.P {
-    background-color: #4040ed;
-  }
-  .cell.Ai {
-    background-color: #ed4040;
-  }
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        table {
-            border-collapse: collapse;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        td {
-            border: 1px solid #ccc;
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            background-color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        td.player, td.computer {
-            cursor: default;
-        }
-        td.player {
-            background-color: #4040ed;
-        }
-        td.computer {
-            background-color: #ed4040;
-        }
-        
-        .square {
-      background: rgba(98, 98, 98, 0.15);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      backdrop-filter: blur(13px);
-      -webkit-backdrop-filter: blur(13px);
-      border: 1.25px solid rgba(255, 255, 255, 0.18);
-      transition: width 0.4s, height 0.4s;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-  }
-    </style>
-    </head>
+</style>
 
-
-
-
-
-
+<center class="font-minecraft mt-[300px]">
+  <ul>
+    {#each $messages as message}
+      {#if message.role === 'assistant'}
+        <li class="assistant-message">🤖 {message.role} says... {message.content}</li>
+      {:else}
+        <li>😊 {message.role} says... {message.content}</li>
+      {/if}
+    {/each}
+  </ul>
+  
+  <form class="w-full max-w-sm" on:submit={handleSubmit}>
+    <input class="font-minecraft appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Talk to AI"  bind:value={$input}/>
+    <button class="font-minecraft ripple-bg-blue-600  g-clip-text bg-gradient-to-r from-blue-600 to-blue-900 hover:bg-blue-800  text-white font-bold py-2 px-4 rounded-full" type='submit'>Send</button>
+  </form>
+</center>
