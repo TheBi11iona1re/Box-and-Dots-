@@ -389,7 +389,7 @@ $: {
 
   @font-face {
   font-family: "Minecraft";
-  src: url("src/routes/game/VCR_OSD_MONO_1.001.ttf");
+  src: url("VCR_OSD_MONO_1.001.ttf");
 }
 
 
