@@ -1,7 +1,6 @@
 <script lang="ts">
   import { writable } from 'svelte/store';
   import { goto } from '$app/navigation';
-
   const size = 10;
   const playerSymbol = 'P';
   const computerSymbol = 'Ai';
@@ -334,7 +333,7 @@ $: {
 </script>
 
 <style>
-@import 'src/app.css';
+
 
 .mycontainer {
     display: flex;
@@ -390,7 +389,7 @@ $: {
 
   @font-face {
   font-family: "Minecraft";
-  src: url("/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/test2/VCR_OSD_MONO_1.001.ttf");
+  src: url("/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/test/VCR_OSD_MONO_1.001.ttf");
 }
 
 
