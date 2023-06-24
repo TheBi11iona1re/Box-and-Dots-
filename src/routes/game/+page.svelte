@@ -389,7 +389,7 @@ $: {
 
   @font-face {
   font-family: "Minecraft";
-  src: url("/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/test/VCR_OSD_MONO_1.001.ttf");
+  src: url("src/routes/game/VCR_OSD_MONO_1.001.ttf");
 }
 
 
