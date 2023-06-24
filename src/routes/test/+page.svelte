@@ -1,21 +1,29 @@
 <script>
-  import "/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/app.css";
   import { useChat } from "ai/svelte";
   import { goto } from '$app/navigation';
   import { onMount, afterUpdate } from 'svelte';
 
   let contentCentered = false;
+  let messages;
+  let handleSubmit;
+  let input;
 
-  const { messages, handleSubmit, input } = useChat({
-    api: "/test",
-  });
+  // Only execute useChat on the client side
+  if (typeof window !== 'undefined') {
+    ({ messages, handleSubmit, input } = useChat({
+      api: "/test",
+    }));
+  }
 
   afterUpdate(() => {
     contentCentered = true;
   });
 </script>
 
+
 <style>
+  @import 'src/app.css';
+  
   @font-face {
     font-family: "Minecraft";
     src: url("/Users/aditya/Downloads/GitHub/Box-and-Dots--1/src/routes/test/VCR_OSD_MONO_1.001.ttf");
