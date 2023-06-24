@@ -333,7 +333,7 @@ $: {
 </script>
 
 <style>
-
+@import 'src/app.css';
 
 .mycontainer {
     display: flex;
