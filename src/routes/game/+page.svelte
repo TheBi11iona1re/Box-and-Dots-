@@ -15,10 +15,10 @@
   let clicked: boolean;
   let gameAI: boolean; 
   let easyAi: boolean; // declare a typescript variable
-
+  
 
     
-
+  
 
   
 
@@ -345,6 +345,7 @@ $: {
     margin: 0;    /* Add this line to remove any default margins */
     padding: 0;   /* Add this line to remove any default padding */
     box-sizing: border-box; /* Add this line to include padding and border in the element's total width and height */
+    
   }
 
   .cell.P2 {
@@ -463,6 +464,7 @@ $: {
 }
 
 
+
 </style>
 
 
@@ -471,14 +473,9 @@ $: {
 <div class="content-container">
 
 
-  <div bind:this={container} style="background-image: url('https://i.imgur.com/vQPuKtq.mp4');
-  background-size: cover;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;"
-  class="mycontainer">
+  <div bind:this={container} class="mycontainer " style="width: 100vw; height: 100vh; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; position: relative;" >
+
+
   
   <div class="score-container">
     <img class="ml-[0px]" src="https://cdn.discordapp.com/attachments/914440092607741952/1104385925909336174/billionaire_dots_and_boxes_game_logo_pixel_art_5ac3e59f-dec3-4bb9-ab92-44e318bcd4fd.png" alt="Lamp" width="100" height="100">
