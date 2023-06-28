@@ -168,6 +168,7 @@ dialog {
   animation: fadeIn .5s forwards;
   opacity: 1;
   pointer-events: auto;
+  
 }
 
 
@@ -226,8 +227,8 @@ dialog {
 <div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop closed'} on:click={toggleDialog}></div>
 
 <center>
-<button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-yellow-600 to-yellow-800 hover:yellow-blue-800 hover:bg-yellow-800 text-white font-bold py-2 px-4 mt-[165px]  rounded-full w-[200px] h-[40px] text font-minecraft text-center active:" on:click={() => goto('/test')} > 
-  Box and Dots AI</button>
+<button class="ripple-bg-yellow-600  g-clip-text bg-gradient-to-r from-yellow-600 to-yellow-800 hover:yellow-blue-800 hover:bg-yellow-800 text-white font-bold py-2 px-4 mt-[165px]  rounded-full w-[450px] h-[40px] text font-minecraft text-center active:" on:click={() => goto('/test')} > 
+  Box and Dots AI ❌ Broken In Production </button>
 </center>
 
 <dialog open={showDialog}>
