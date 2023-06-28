@@ -7,7 +7,10 @@ import "../app.css";
 import { message } from '@tauri-apps/api/dialog';
 let gameAI = true
 let easyAi = true;
-
+import { dev } from '$app/environment';
+import { inject } from '@vercel/analytics';
+ 
+inject({ mode: dev ? 'development' : 'production' });
 
 import { invoke } from '@tauri-apps/api/tauri'
 
@@ -168,7 +171,7 @@ dialog {
   animation: fadeIn .5s forwards;
   opacity: 1;
   pointer-events: auto;
-  
+
 }
 
 
