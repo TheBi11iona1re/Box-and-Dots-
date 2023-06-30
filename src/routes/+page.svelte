@@ -9,8 +9,55 @@ let gameAI = true
 let easyAi = true;
 import { dev } from '$app/environment';
 import { inject } from '@vercel/analytics';
- 
+
 inject({ mode: dev ? 'development' : 'production' });
+
+
+
+let cursor: HTMLElement;
+let x = 0;
+let y = 0;
+let isReady = false;
+let size = 20;
+
+onMount(() => {
+  cursor = document.querySelector(".cursor")!;
+  window.addEventListener("mousemove", (e) => {
+    x = e.clientX;
+    y = e.clientY;
+    cursor.style.left = x + "px";
+    cursor.style.top = y + "px";
+    // Check if the blur cursor is over an element
+    let element = document.elementFromPoint(x, y);
+    if (element && element !== document.body) {
+      // Hide the native cursor
+      document.body.style.cursor = "none";
+      // Show the blur cursor
+      cursor.style.display = "block";
+    } else {
+      // Hide the native cursor
+      document.body.style.cursor = "none";
+      // Hide the blur cursor
+      cursor.style.display = "none";
+    }
+  });
+  window.addEventListener("mouseover", (e) => {
+    if (e.target instanceof HTMLButtonElement) {
+      isReady = true;
+      size = 30;
+      document.body.style.cursor = "none";
+    }
+  });
+  window.addEventListener("mouseout", () => {
+    isReady = false;
+    size = 20;
+    document.body.style.cursor = "none";
+  });
+});
+
+export { cursor, x, y, isReady, size };
+
+
 
 import { invoke } from '@tauri-apps/api/tauri'
 
@@ -166,6 +213,7 @@ dialog {
   position: fixed; 
   z-index: 0; 
   -webkit-backdrop-filter: blur(10px) brightness(0.69);
+  brightness: 0.69;
   width: 100vw;
   height: 100vh;
   animation: fadeIn .5s forwards;
@@ -199,7 +247,28 @@ dialog {
   to {opacity: 0;}
 }
 
+.cursor {
+  position: fixed;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  /* Use cubic-bezier function to create a custom easing curve */
+  transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), height 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: absolute;
+  z-index: 9999;
+  border: 1.25px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+
 </style>
+<div class="cursor" style="--size: {size}px;"></div>
 
 <div bind:this={container} style="width: 100vw; height: 100vh; background-image: url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; position: relative;" >
 

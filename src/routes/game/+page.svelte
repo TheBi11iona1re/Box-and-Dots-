@@ -1,6 +1,7 @@
 <script lang="ts">
   import { writable } from 'svelte/store';
   import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
   const size = 10;
   const playerSymbol = 'P';
   const computerSymbol = 'Ai';
@@ -17,7 +18,49 @@
   let easyAi: boolean; // declare a typescript variable
   
 
-    
+  let cursor: HTMLElement;
+let x = 0;
+let y = 0;
+let isReady = false;
+let size3 = 20;
+
+onMount(() => {
+  cursor = document.querySelector(".cursor")!;
+  window.addEventListener("mousemove", (e) => {
+    x = e.clientX;
+    y = e.clientY;
+    cursor.style.left = x + "px";
+    cursor.style.top = y + "px";
+    // Check if the blur cursor is over an element
+    let element = document.elementFromPoint(x, y);
+    if (element && element !== document.body) {
+      // Hide the native cursor
+      document.body.style.cursor = "none";
+      // Show the blur cursor
+      cursor.style.display = "block";
+    } else {
+      // Hide the native cursor
+      document.body.style.cursor = "none";
+      // Hide the blur cursor
+      cursor.style.display = "none";
+    }
+  });
+  window.addEventListener("mouseover", (e) => {
+    if (e.target instanceof HTMLButtonElement) {
+      isReady = true;
+      size3 = 30;
+      document.body.style.cursor = "none";
+    }
+  });
+  window.addEventListener("mouseout", () => {
+    isReady = false;
+    size3 = 20;
+    document.body.style.cursor = "none";
+  });
+});
+
+export { cursor, x, y, isReady, size3 };
+
   
 
   
@@ -402,6 +445,23 @@ $: {
   height: 100vh;
 }
 
+.cursor {
+  position: fixed;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  /* Use cubic-bezier function to create a custom easing curve */
+  transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), height 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: absolute;
+  z-index: 9999;
+  border: 1.25px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+
 .score-container {
   display: flex;
   flex-direction: column;
@@ -511,5 +571,6 @@ $: {
   </div>
 </div>
 
+<div class="cursor" style="--size: {size3}px;"></div>
 </div>
 

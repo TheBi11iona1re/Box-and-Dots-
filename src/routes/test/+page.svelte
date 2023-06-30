@@ -8,6 +8,30 @@
   let handleSubmit;
   let input;
 
+  let cursor;
+  let x = 0;
+  let y = 0;
+  let size = 20;
+  let isReady = false;
+
+  onMount(() => {
+    cursor = document.querySelector(".cursor");
+    window.addEventListener("mousemove", (e) => {
+      x = e.clientX;
+      y = e.clientY;
+      cursor.style.left = x + "px";
+      cursor.style.top = y + "px";
+    });
+    window.addEventListener("mousedown", () => {
+      isReady = true;
+      size = 40;
+    });
+    window.addEventListener("mouseup", () => {
+      isReady = false;
+      size = 20;
+    });
+  });
+
   // Only execute useChat on the client side
   if (typeof window !== 'undefined') {
     ({ messages, handleSubmit, input } = useChat({
@@ -23,6 +47,18 @@
 
 <style>
   @import 'src/app.css';
+
+  .cursor {
+  
+  position: fixed;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
   
   @font-face {
     font-family: "Minecraft";
@@ -79,7 +115,7 @@
 
   </div>
 
-
+  <div class="cursor" style="--size: {size}px;"></div>
 
   <div class="button-container">
     <center>
