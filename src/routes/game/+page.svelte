@@ -523,6 +523,13 @@ $: {
   }
 }
 
+* {
+  cursor: pointer;
+}
+
+*:hover {
+  cursor: none;
+}
 
 
 </style>

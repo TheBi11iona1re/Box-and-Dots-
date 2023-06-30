@@ -22,6 +22,7 @@ let size = 20;
 
 onMount(() => {
   cursor = document.querySelector(".cursor")!;
+  
   window.addEventListener("mousemove", (e) => {
     x = e.clientX;
     y = e.clientY;
@@ -223,6 +224,7 @@ dialog {
 }
 
 
+
 .backdrop.closed {
   top: 0;
   position: fixed; 
@@ -264,6 +266,13 @@ dialog {
 }
 
 
+* {
+  cursor: pointer;
+}
+
+*:hover {
+  cursor: none;
+}
 
 
 
