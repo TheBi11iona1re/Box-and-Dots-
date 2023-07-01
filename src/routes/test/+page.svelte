@@ -119,7 +119,7 @@
 
   <div class="button-container">
     <center>
-      <button class="ripple-bg-gray-600 g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 text-white font-minecraft py-2 px-4 mt-[00px] rounded-full w-[100px] h-[50px] text-[20px] font-bold text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}>
+      <button class="ripple-bg-gray-600 g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 text-white font-minecraft py-2 px-4 mt-[00px] rounded-full w-[100px] h-[50px] text-[20px] font-bold text-center active:" on:click={() => setTimeout(() => goto('/'), 0)}>
         Back
       </button>
     </center>

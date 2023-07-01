@@ -596,7 +596,7 @@ $: {
     <p class="font-minecraft text-xl text-gray-300 mr-4">Ai Difficulty = {aiDifficulty}</p>
     <p class="font-minecraft text-xl text-gray-300 mr-4">Sound = {clicked}</p>
     
-    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[20px]  rounded-full w-[150px] h-[50px] text-xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 200)}> 
+    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[20px]  rounded-full w-[150px] h-[50px] text-xl font-minecraft text-center active:" on:click={() => setTimeout(() => goto('/'), 0)}> 
       Main Menu </button>
 </div>
 
