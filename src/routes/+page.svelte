@@ -14,7 +14,6 @@ import { inject } from '@vercel/analytics';
 inject({ mode: dev ? 'development' : 'production' });
 
 
-
 let cursor: HTMLElement;
 let x = 0;
 let y = 0;
@@ -285,9 +284,9 @@ dialog {
   cursor: none;
 }
 
-
-
 </style>
+
+
 <div class="cursor" style="--size: {size}px;"></div>
 
 <div bind:this={container} style="width: 100vw; height: 100vh; background-image: url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; position: relative;" >
@@ -297,9 +296,9 @@ dialog {
   
     <h1 class="text-6xl mt-[0px] text-4xl drop-shadow-lg font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-300  to-blue-900 transform translate-y-[80px] font-minecraft">Dots and Boxes</h1>
 
-  <button class="ripple-bg-blue-600  g-clip-text bg-gradient-to-r from-blue-600 to-blue-900 hover:bg-blue-800   text-white transform translate-y-[100px] font-minecraft py-2 px-4 mt-[00px] rounded-full w-[600px] h-[200px] text-[90px] font-bold text-center active:" on:click={() => setTimeout(() => goto('/game'), 0)}>
-    Play!
-  </button>
+    <button class="bg-blue-600 hover:bg-blue-800 text-white transform-gpu translate-y-[100px] font-minecraft py-2 px-4 mt-[00px] rounded-full w-[600px] h-[200px] text-[90px] font-bold text-center active: transition-all duration-300 ease-in-out transform hover:scale-105" on:click={() => setTimeout(() => goto('/game'), 0)}>
+      Play!
+    </button>
 
 
 
@@ -312,14 +311,14 @@ dialog {
 
 
 <center>
-    <button class="ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[110px]  rounded-full w-[400px] h-[90px] text-4xl font-minecraft text-center active:" on:click={toggleDialog} > 
+    <button class="transition-all duration-300 ease-in-out transform-gpu hover:scale-105 ripple-bg-gray-600  g-clip-text bg-gradient-to-r from-gray-600 to-gray-800 hover:bg-blue-800 hover:bg-gray-800 text-white font-bold py-2 px-4 mt-[110px]  rounded-full w-[400px] h-[90px] text-4xl font-minecraft text-center active:" on:click={toggleDialog} > 
         Settings & Info</button>
 </center>
 
 <div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop closed'} on:click={toggleDialog}></div>
 
 <center>
-<button class="ripple-bg-yellow-600  g-clip-text bg-gradient-to-r from-yellow-600 to-yellow-800 hover:yellow-blue-800 hover:bg-yellow-800 text-white font-bold py-2 px-4 mt-[165px]  rounded-full w-[450px] h-[40px] text font-minecraft text-center active:" on:click={() => goto('/test')} > 
+<button class="transition-all duration-300 ease-in-out transform-gpu hover:scale-105 ripple-bg-yellow-600  g-clip-text bg-gradient-to-r from-yellow-600 to-yellow-800 hover:yellow-blue-800 hover:bg-yellow-800 text-white font-bold py-2 px-4 mt-[165px]  rounded-full w-[450px] h-[40px] text font-minecraft text-center active:" on:click={() => goto('/test')} > 
   Box and Dots AI ❌ Broken In Production </button>
 </center>
 
@@ -363,7 +362,7 @@ dialog {
 
 
 <button
-  class="text-blue-600 hover:text-blue-900 font-minecraft font-bold text-center fixed bottom-2 right-2 "
+  class=" transition-all duration-300 ease-in-out transform-gpu hover:scale-125 text-blue-600 hover:text-blue-900 font-minecraft font-bold text-center fixed bottom-2 right-2 "
   on:click={mute}
 >
   <img
