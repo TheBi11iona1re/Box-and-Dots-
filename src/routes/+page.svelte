@@ -296,7 +296,7 @@ dialog {
   
     <h1 class="text-6xl mt-[0px] text-4xl drop-shadow-lg font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-300  to-blue-900 transform translate-y-[80px] font-minecraft">Dots and Boxes</h1>
 
-    <button class="bg-blue-600 hover:bg-blue-800 text-white transform-gpu translate-y-[100px] font-minecraft py-2 px-4 mt-[00px] rounded-full w-[600px] h-[200px] text-[90px] font-bold text-center active: transition-all duration-300 ease-in-out transform hover:scale-105" on:click={() => setTimeout(() => goto('/game'), 0)}>
+    <button class="bg-blue-600 hover:bg-blue-800 text-white  translate-y-[100px] font-minecraft py-2 px-4 mt-[00px] rounded-full w-[600px] h-[200px] text-[90px] font-bold text-center active: transition-all duration-300 ease-in-out transform-gpu hover:scale-105" on:click={() => setTimeout(() => goto('/game'), 0)}>
       Play!
     </button>
 
