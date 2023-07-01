@@ -1,9 +1,10 @@
 <script lang="ts">
 import { goto } from '$app/navigation';
 import { sound } from 'svelte-sound';
-import { onMount } from 'svelte';
+import { onDestroy, onMount } from "svelte";
 import { appWindow } from '@tauri-apps/api/window'
 import "../app.css";
+import { beforeUpdate } from "svelte";
 import { message } from '@tauri-apps/api/dialog';
 let gameAI = true
 let easyAi = true;
@@ -134,6 +135,7 @@ let clicked = false;
 
 
   onMount(() => {
+
     // get clicked from localStorage on page load
     clicked = localStorage.getItem("clicked") === "true";
     // pause audio if clicked is true
@@ -141,6 +143,15 @@ let clicked = false;
       audioFile.pause();
     }
   });
+
+  window.addEventListener("beforeunload", () => {
+  const audio = window.parent.document.querySelector("audio");
+
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+});
 
 
 

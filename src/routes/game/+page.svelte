@@ -24,7 +24,21 @@ let y = 0;
 let isReady = false;
 let size3 = 20;
 
+
+let boardSize: number; // declare a variable for board size
+  $: boardSize = Math.min(window.innerWidth, window.innerHeight) * 0.8; // assign it a value that is 80% of the smaller dimension of the window
+  $: console.log(boardSize); // log the board size for debugging
+
+  onMount(() => {
+    container.addEventListener("mousemove", listener);
+    window.addEventListener("resize", () => {
+      boardSize = Math.min(window.innerWidth, window.innerHeight) * 0.8;
+    });
+  });
+
+
 onMount(() => {
+
   cursor = document.querySelector(".cursor")!;
   window.addEventListener("mousemove", (e) => {
     x = e.clientX;
@@ -74,60 +88,58 @@ export { cursor, x, y, isReady, size3 };
 
   clicked = !clicked;
 
-  let audioFile = new Audio(
-      "https://audio.jukehost.co.uk/U9SJhg69MqIuCNKJf3dK9bOXa0Co0CeQ"
-    );
-    audioFile.loop = true; // set loop to true
 
-    // play or pause the audio file based on clicked
-    if (clicked === true) {
-      audioFile.play();
-    } else {
-      audioFile.pause();
-    }
+
     let winSound = new Audio(
       "https://audio.jukehost.co.uk/9H4EbqTROfaoR5OFTPgEaxJtMZRu0INV"
+    );
+
+    let loseSound = new Audio(
+      "https://audio.jukehost.co.uk/gdB7GgbChpDLTAVB6AK3Yv8401FLbc3Q"
     );
 
 
   var reloaded = localStorage.getItem("reloaded");
 
 // If not, set the reloaded flag to true and reload the page
-if (!reloaded) {
-  localStorage.setItem("reloaded", true);
-  location.reload(true);
-}
+// if (!reloaded) {
+//   localStorage.setItem("reloaded", true);
+//   location.reload(true);
+// }
 
-// If yes, clear the reloaded flag and proceed normally
-else {
-  localStorage.removeItem("reloaded");
-  // Your normal code here
-}
+// // If yes, clear the reloaded flag and proceed normally
+// else {
+//   localStorage.removeItem("reloaded");
+//   // Your normal code here
+// }
 
-  let container: HTMLElement;
-  // Declare a variable to store the current event listener
-  let listener: (event: MouseEvent) => void;
-  // Declare a reactive function for mouse movement
-  $: {
-    if (container) {
-      // Remove the old event listener if it exists
-      if (listener) {
-        container.removeEventListener("mousemove", listener);
-      }
-      // Define a new event listener function
-      listener = function(event: MouseEvent) {
-        // Get the mouse position relative to the container
-        let x = event.clientX - container.offsetLeft;
-        let y = event.clientY - container.offsetTop;
-        // Calculate the percentage of the mouse position
-        let xPercent = x / container.offsetWidth * 100;
-        let yPercent = y / container.offsetHeight * 100;
-        // Set the background position to the percentage
-        container.style.backgroundPosition = xPercent + "% " + yPercent + "%";
-      };
-      // Add the new event listener to the container
-      container.addEventListener("mousemove", listener);
+let container: HTMLElement; // declare a variable for the container element
+  let listener: (event: MouseEvent) => void; // declare a variable for the event listener function
+  let animationId: number; // declare a variable for the animation frame id
+
+  // Define the event listener function
+  listener = function(event: MouseEvent) {
+    // Cancel the previous animation frame if it exists
+    if (animationId) {
+      cancelAnimationFrame(animationId);
     }
+    // Request a new animation frame and pass a callback function
+    animationId = requestAnimationFrame(() => {
+      // Get the mouse position relative to the container
+      let x = event.clientX - container.offsetLeft;
+      let y = event.clientY - container.offsetTop;
+      // Calculate the percentage of the mouse position
+      let xPercent = x / container.offsetWidth * 100;
+      let yPercent = y / container.offsetHeight * 100;
+      // Set the background position to the percentage
+      container.style.backgroundPosition = xPercent + "% " + yPercent + "%";
+    });
+  };
+
+
+  // Remove the event listener from the container when it is destroyed
+  function onDestroy() {
+    container.removeEventListener("mousemove", listener);
   }
 
 
@@ -137,10 +149,6 @@ else {
     symbol: string;
   }
 
-  function resize() {
-    size2 = Math.min(window.innerWidth, window.innerHeight) / 2;
-     // Set the canvas width and height to match the size
-  }
 
   
 
@@ -176,6 +184,18 @@ else {
 
   }
 };
+
+
+
+window.addEventListener("beforeunload", () => {
+  const audio = window.parent.document.querySelector("audio");
+
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+});
+
 
 
 let directions = [
@@ -317,12 +337,27 @@ const gameOver = (symbol: string) => {
         break;
     }
     alert(`${winner} wins!`);
+    // Play the sound if clicked is true
+    if (clicked) {
+      if (winner === 'Computer') {
+        loseSound.play();
+      } else {
+        winSound.play();
+      }
+    }
   } else if (isBoardFull()) {
     alert('Game Over! It\'s a tie!');
+    // Play the sound if clicked is true
+    if (clicked) {
+      loseSound.play();
+    }
   }
 
-  setTimeout(() => { board.set(createBoard()); }, 600);
-  currentPlayer = playerSymbol; // reset to player's turn
+  // Reset the board and the current player after a delay
+  setTimeout(() => { 
+    board.set(createBoard()); 
+    currentPlayer = playerSymbol; // reset to player's turn
+  }, 600);
 };
 
 // Modify your checkForLine function to call gameOver with empty symbol if no player has won and board is full.
@@ -401,8 +436,7 @@ $: {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
     gap: 1px;
-    width: 80vmin;
-    height: 80vmin;
+
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   background: rgba(98, 98, 98, 0.15);
@@ -410,8 +444,9 @@ $: {
       backdrop-filter: blur(13px);
       -webkit-backdrop-filter: blur(20px);
       border: 1.25px solid rgba(255, 255, 255, 0.18);
-      transition: width 0.4s, height 0.4s;
+      transition: width .4s, height .4s;
   }
+  
   .cell {
     border: 1px solid rgba(255, 255, 255, 0.18);
     display: flex;
@@ -540,7 +575,7 @@ $: {
 <div class="content-container">
 
 
-  <div bind:this={container} class="mycontainer " style="width: 100vw; height: 100vh; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; position: relative;" >
+  <div  bind:this={container} on:mount={onMount} on:destroy={onDestroy} class="mycontainer " style="width: 100vw; height: 100vh; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cutewallpaper.org/21/pixel-art-city-background/Pixel-Art-Background-Gif-1920x1080-Ryanmartinproductionscom.gif'); background-size: 135%; position: relative;" >
 
 
   
@@ -567,15 +602,15 @@ $: {
 
   
 
-  <div class="board font-minecraft">
-    {#each $board as row, i}
-      {#each row as cell, j}
-        <div class={`cell ${cell.symbol}`} on:click={() => playerMove(i, j)}>
-          {cell.symbol}
-        </div>
-      {/each}
+<div class="board font-minecraft" style={`width: ${boardSize}px !important; height: ${boardSize}px !important;`}>
+  {#each $board as row, i}
+    {#each row as cell, j}
+      <div class={`cell ${cell.symbol}`} on:click={() => playerMove(i, j)}>
+        {cell.symbol}
+      </div>
     {/each}
-  </div>
+  {/each}
+</div>
 </div>
 
 <div class="cursor" style="--size: {size3}px;"></div>
