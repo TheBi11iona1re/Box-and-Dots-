@@ -8,23 +8,22 @@
 	},
 	"package": {
 		"productName": "Dots and Boxes",
-		"version": "1.0.0"
+		"version": "1.1.0"
 	},
 	"tauri": {
 		"allowlist": {
-			"fs": {
-				"all": true
+			"http": {
+				"all": true,
+				"request": true
 			},
 			"dialog": {
-				"all": true, 
-       			 "ask": true,
-       			 "confirm": true,
-       			 "message": true,
-       			 "open": true,
-       			 "save": true 
-				}
-
-
+				"all": true,
+				"ask": true,
+				"confirm": true,
+				"message": true,
+				"open": true,
+				"save": true
+			}
 		},
 		"bundle": {
 			"active": true,

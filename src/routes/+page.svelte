@@ -10,9 +10,15 @@ let gameAI = true
 let easyAi = true;
 import { dev } from '$app/environment';
 import { inject } from '@vercel/analytics';
+import { fade } from 'svelte/transition';
 
 inject({ mode: dev ? 'development' : 'production' });
 
+let visible = true;
+function goToGame() {
+  visible = false;
+  goto('/game'); 
+}
 
 let cursor: HTMLElement;
 let x = 0;
@@ -286,6 +292,8 @@ dialog {
 
 </style>
 
+<div in:{visible}>
+
 
 <div class="cursor" style="--size: {size}px;"></div>
 
@@ -377,3 +385,4 @@ dialog {
 </div>
 
 
+</div>
