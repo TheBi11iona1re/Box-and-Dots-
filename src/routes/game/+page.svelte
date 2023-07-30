@@ -17,6 +17,8 @@
   let gameAI: boolean; 
   let easyAi: boolean; // declare a typescript variable
   
+  // Inside the component 
+
 
 
 
@@ -363,6 +365,7 @@ $: {
   ? 'computer-active' 
   : '';
 }
+
 
 
 
