@@ -326,8 +326,8 @@ dialog {
 <div id="backdrop" class={showDialog ? 'backdrop open' : 'backdrop closed'} on:click={toggleDialog}></div>
 
 <center>
-<button class="transition-all duration-300 ease-in-out transform-gpu hover:scale-105 ripple-bg-yellow-600  g-clip-text bg-gradient-to-r from-yellow-600 to-yellow-800 hover:yellow-blue-800 hover:bg-yellow-800 text-white font-bold py-2 px-4 mt-[165px]  rounded-full w-[450px] h-[40px] text font-minecraft text-center active:" on:click={() => goto('/test')} > 
-  Box and Dots AI ❌ Broken In Production </button>
+<!----<button class="transition-all duration-300 ease-in-out transform-gpu hover:scale-105 ripple-bg-yellow-600  g-clip-text bg-gradient-to-r from-yellow-600 to-yellow-800 hover:yellow-blue-800 hover:bg-yellow-800 text-white font-bold py-2 px-4 mt-[165px]  rounded-full w-[450px] h-[40px] text font-minecraft text-center active:" on:click={() => goto('/test')} > 
+  Box and Dots AI ❌ Broken In Production </button>-->
 </center>
 
 <dialog open={showDialog}>
